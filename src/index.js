@@ -2,6 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 
 import { Auth0Provider } from './auth'
+import { NetworkProvider } from './network'
 import * as git from './git'
 import App from './app'
 import './index.css'
@@ -10,7 +11,9 @@ git.initialize()
 
 ReactDOM.render(
   <Auth0Provider>
-    <App />
+    <NetworkProvider>
+      <App />
+    </NetworkProvider>
   </Auth0Provider>,
   document.getElementById('root')
 )

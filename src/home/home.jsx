@@ -1,6 +1,7 @@
 import React from 'react'
 
 import { useAuth0 } from '../auth'
+import { useNetwork } from '../network'
 import { getFS, getEmitter, getRepoUrl, CORS_PROXY } from '../git'
 import { clone, utils } from 'isomorphic-git'
 
@@ -8,6 +9,7 @@ import styles from './home.module.css'
 
 const Home = () => {
   const { user, isAuthenticated, logout } = useAuth0()
+  const { isOnline } = useNetwork()
 
   const testApi = async () => {
     console.log('test api')
@@ -70,6 +72,7 @@ const Home = () => {
     <div className={styles.home}>
       <header>
         <h1>Kick notes</h1>
+        <h3>{isOnline ? 'Online' : 'Offline'}</h3>
         {isAuthenticated && <button onClick={logout}>Logout</button>}
       </header>
       <h2>{user.name}</h2>
