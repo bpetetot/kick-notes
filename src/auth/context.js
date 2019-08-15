@@ -38,15 +38,17 @@ export const AuthProvider = ({ children }) => {
           })
           const data = await resp.json()
           setUser({
+            uid: user.uid,
             displayName: data.name,
             username: data.login,
+            token: accessToken,
           })
           setIsAuthenticated(true)
         }
       }
       setLoading(false)
     })
-  }, [token, setToken])
+  }, []) // eslint-disable-line
 
   const login = () => {
     const provider = new firebase.auth.GithubAuthProvider()
