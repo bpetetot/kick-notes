@@ -2,7 +2,7 @@ import React from 'react'
 
 import { useAuth } from '../auth'
 import { useNetwork } from '../helpers/network'
-import Notes, { NotesProvider } from '../notes'
+import { NotesProvider, Notes, Note } from '../notes'
 
 import styles from './home.module.css'
 
@@ -26,6 +26,7 @@ const Home = () => {
             <code>{JSON.stringify(user, null, 2)}</code>
           </p>
           <Notes />
+          <Note />
         </NotesProvider>
       )}
     </div>

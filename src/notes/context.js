@@ -7,22 +7,51 @@ const NotesContext = React.createContext()
 export const useNotes = () => useContext(NotesContext)
 
 export const NotesProvider = ({ children, user, isOnline }) => {
-  const [currentFolder] = useState(getRepoFolder(user))
+  const [currentFolder, setCurrentFolder] = useState({
+    path: getRepoFolder(user),
+    level: 0,
+    isDirectory: true,
+  })
+  const [currentNote, setCurrentNote] = useState()
   const [notes, setNotes] = useState([])
 
   useEffect(() => {
     if (!user) return
     const load = async () => {
-      await fetchRepo(user, console.log)
-      const _notes = await list(currentFolder)
+      if (isOnline) {
+        await fetchRepo(user, console.log)
+      }
+      const _notes = await list(currentFolder.path)
       setNotes(_notes)
     }
-    if (isOnline) {
-      load()
+    load()
+  }, [user, isOnline]) // eslint-disable-line
+
+  const open = async file => {
+    if (file.isDirectory) {
+      const _notes = await list(file.path)
+      if (!file.parent) {
+        file.parent = currentFolder
+      }
+      setNotes(_notes)
+      setCurrentFolder(file)
+    } else {
+      setCurrentNote(file)
     }
-  }, [user, isOnline, currentFolder])
+  }
+
+  const goBack = async () => {
+    const { parent } = currentFolder
+    if (parent) {
+      await open(parent)
+    }
+  }
 
   return (
-    <NotesContext.Provider value={{ notes }}>{children}</NotesContext.Provider>
+    <NotesContext.Provider
+      value={{ notes, currentNote, currentFolder, open, goBack }}
+    >
+      {children}
+    </NotesContext.Provider>
   )
 }

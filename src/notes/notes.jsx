@@ -3,12 +3,17 @@ import React from 'react'
 import { useNotes } from '../notes'
 
 const Notes = () => {
-  const { notes } = useNotes()
+  const { currentFolder, notes, open, goBack } = useNotes()
 
   return (
     <div>
+      {currentFolder && currentFolder.level > 0 && (
+        <button onClick={goBack}>Back</button>
+      )}
       {notes.map(note => (
-        <div key={note.file}>{note.file}</div>
+        <div key={note.file} onClick={() => open(note)}>
+          {note.file}
+        </div>
       ))}
     </div>
   )

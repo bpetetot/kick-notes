@@ -33,6 +33,7 @@ export const list = async filepath => {
         isDirectory: stats.isDirectory(),
         isDotFile: file.startsWith('.'),
         extension: file.split('.').pop(),
+        level: path.split('/').length - 2,
       }
     })
   )
@@ -40,4 +41,12 @@ export const list = async filepath => {
   return filesinfo.filter(
     file => (file.isDirectory && !file.isDotFile) || file.extension === 'md'
   )
+}
+
+export const readFile = async filepath => {
+  const stats = await stat(filepath)
+  if (!stats || stats.isDirectory()) return
+
+  const uint8array = await getFS().readFile(filepath)
+  return new TextDecoder('utf-8').decode(uint8array)
 }
