@@ -1,81 +1,79 @@
+import firebase from 'firebase/app'
+
 import React, { useState, useEffect, useContext } from 'react'
-import createAuth0Client from '@auth0/auth0-spa-js'
+import { useStorage } from '../helpers/storage'
 
-import { auth0Config, auth0ApiBody, getTokenUrl, getUserUrl } from './config'
+const AuthContext = React.createContext()
 
-const redirectAfterLogin = appState => {
-  window.history.replaceState(
-    {},
-    document.title,
-    appState && appState.targetUrl ? appState.targetUrl : '/'
-  )
+export const useAuth = () => useContext(AuthContext)
+
+const redirectTo = (path = '/') => {
+  window.history.replaceState({}, document.title, path)
 }
 
-export const Auth0Context = React.createContext()
-
-export const useAuth0 = () => useContext(Auth0Context)
-
-export const Auth0Provider = ({ children }) => {
+export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState()
   const [user, setUser] = useState()
-  const [auth0Client, setAuth0] = useState()
   const [loading, setLoading] = useState(true)
+  const [token, setToken] = useStorage('token')
 
   useEffect(() => {
-    const initAuth0 = async () => {
-      const auth0 = await createAuth0Client(auth0Config)
-      setAuth0(auth0)
+    firebase.auth().onAuthStateChanged(async user => {
+      if (user) {
+        // User is signed in.
+        const { credential } = await firebase.auth().getRedirectResult()
+        if (credential) {
+          setToken(credential.accessToken)
+        }
 
-      if (window.location.search.includes('code=')) {
-        const { appState } = await auth0.handleRedirectCallback()
-        redirectAfterLogin(appState)
+        // Call GitHub API to get user info
+        const accessToken = (credential && credential.accessToken) || token
+        if (accessToken) {
+          const resp = await fetch('https://api.github.com/user', {
+            method: 'GET',
+            headers: {
+              'content-type': 'application/json',
+              Authorization: `token ${accessToken}`,
+            },
+          })
+          const data = await resp.json()
+          setUser({
+            displayName: data.name,
+            username: data.login,
+          })
+          setIsAuthenticated(true)
+        }
       }
-
-      const isAuthenticated = await auth0.isAuthenticated()
-
-      setIsAuthenticated(isAuthenticated)
-
-      if (isAuthenticated) {
-        const user = await auth0.getUser()
-
-        // Get Auth0 API management token
-        const tokenResponse = await fetch(getTokenUrl(), {
-          method: 'POST',
-          headers: { 'content-type': 'application/json' },
-          body: JSON.stringify(auth0ApiBody),
-        })
-        const tokenJson = await tokenResponse.text()
-        const { access_token } = JSON.parse(tokenJson)
-
-        // Call API management to get User Provider Info
-        const userResponse = await fetch(getUserUrl(user.sub), {
-          method: 'GET',
-          headers: {
-            'content-type': 'application/json',
-            Authorization: `Bearer ${access_token}`,
-          },
-        })
-        const userData = await userResponse.json()
-
-        setUser(userData)
-      }
-
       setLoading(false)
-    }
-    initAuth0()
-  }, [])
+    })
+  }, [token, setToken])
+
+  const login = () => {
+    const provider = new firebase.auth.GithubAuthProvider()
+    provider.addScope('repo')
+    firebase.auth().signInWithRedirect(provider)
+  }
+
+  const logout = () => {
+    firebase.auth().signOut()
+    setToken(null)
+    setUser(null)
+    setIsAuthenticated(false)
+    setLoading(false)
+    redirectTo('/')
+  }
 
   return (
-    <Auth0Context.Provider
+    <AuthContext.Provider
       value={{
         isAuthenticated,
         user,
         loading,
-        login: () => auth0Client.loginWithRedirect(),
-        logout: () => auth0Client.logout(),
+        login,
+        logout,
       }}
     >
       {children}
-    </Auth0Context.Provider>
+    </AuthContext.Provider>
   )
 }

@@ -1,10 +1,12 @@
 import React, { useEffect } from 'react'
 import { Route } from 'react-router-dom'
 
-import { useAuth0 } from '../../auth'
+import { useAuth } from '../../auth'
 
 const PrivateRoute = ({ component: Component, path, ...rest }) => {
-  const { loading, isAuthenticated, login } = useAuth0()
+  const { loading, isAuthenticated, login } = useAuth()
+
+  console.log('PrivateRoute ' + path)
 
   useEffect(() => {
     if (loading || isAuthenticated) {

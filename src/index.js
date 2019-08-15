@@ -1,20 +1,23 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 
-import { Auth0Provider } from './auth'
-import { NetworkProvider } from './network'
+import { AuthProvider } from './auth'
+import { NetworkProvider } from './helpers/network'
 import * as git from './git'
+import * as firebase from './firebase'
 import App from './app'
 import './index.css'
+
+firebase.initialize()
 
 git.initialize()
 
 ReactDOM.render(
-  <Auth0Provider>
+  <AuthProvider>
     <NetworkProvider>
       <App />
     </NetworkProvider>
-  </Auth0Provider>,
+  </AuthProvider>,
   document.getElementById('root')
 )
 

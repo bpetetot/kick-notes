@@ -1,15 +1,17 @@
 import React from 'react'
 
-import { useAuth0 } from '../auth'
-import { useNetwork } from '../network'
+import { useAuth } from '../auth'
+import { useNetwork } from '../helpers/network'
 import { getFS, getEmitter, getRepoUrl, CORS_PROXY } from '../git'
 import { clone, utils } from 'isomorphic-git'
+import { useStorage } from '../helpers/storage'
 
 import styles from './home.module.css'
 
 const Home = () => {
-  const { user, isAuthenticated, logout } = useAuth0()
+  const { user, isAuthenticated, login, logout } = useAuth()
   const { isOnline } = useNetwork()
+  const [token] = useStorage('token')
 
   const testApi = async () => {
     console.log('test api')
@@ -17,7 +19,7 @@ const Home = () => {
       method: 'GET',
       headers: {
         'content-type': 'application/json',
-        Authorization: `token ${user.identities[0].access_token}`,
+        Authorization: `token ${token}`,
       },
     }
 
@@ -46,11 +48,8 @@ const Home = () => {
     getEmitter().on('message', onMessage)
     getEmitter().on('progress', onProgress)
 
-    const credentials = utils.auth(
-      user.nickname,
-      user.identities[0].access_token
-    )
-
+    console.log({ user, token })
+    const credentials = utils.auth(user.username, token)
     await clone({
       ...credentials,
       dir,
@@ -73,14 +72,19 @@ const Home = () => {
       <header>
         <h1>Kick notes</h1>
         <h3>{isOnline ? 'Online' : 'Offline'}</h3>
+        {!isAuthenticated && <button onClick={login}>Login with github</button>}
         {isAuthenticated && <button onClick={logout}>Logout</button>}
       </header>
-      <h2>{user.name}</h2>
-      <button onClick={testGit}>Test GIT</button>
-      <button onClick={testApi}>Test API</button>
-      <p>
-        <code>{JSON.stringify(user, null, 2)}</code>
-      </p>
+      {isAuthenticated && (
+        <>
+          <h2>{user.displayName}</h2>
+          <button onClick={testGit}>Test GIT</button>
+          <button onClick={testApi}>Test API</button>
+          <p>
+            <code>{JSON.stringify(user, null, 2)}</code>
+          </p>
+        </>
+      )}
     </div>
   )
 }

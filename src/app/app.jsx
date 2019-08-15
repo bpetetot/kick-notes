@@ -1,12 +1,12 @@
 import React from 'react'
-import { BrowserRouter, Switch } from 'react-router-dom'
+import { BrowserRouter, Switch, Route } from 'react-router-dom'
 
-import { useAuth0, AUTH_REDIRECT_PATH } from '../auth'
+import { useAuth, AUTH_REDIRECT_PATH } from '../auth'
 import PrivateRoute from '../components/PrivateRoute'
 import Home from '../home'
 
 const App = () => {
-  const { loading } = useAuth0()
+  const { loading } = useAuth()
 
   if (loading) {
     return <div>Loading...</div>
@@ -15,7 +15,7 @@ const App = () => {
   return (
     <BrowserRouter>
       <Switch>
-        <PrivateRoute path="/" component={Home} exact />
+        <Route path="/" component={Home} />
         <PrivateRoute path={AUTH_REDIRECT_PATH} exact />
       </Switch>
     </BrowserRouter>
