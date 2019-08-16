@@ -1,11 +1,8 @@
 .offline {
-  display: flex;
-  align-items: center;
   color: var(--error-color);
 }
 
 .offline > span {
   font-size: 1.2rem;
-  margin-left: 0.4rem;
   line-height: 16px;
 }

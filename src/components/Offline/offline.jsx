@@ -1,8 +1,8 @@
 import React from 'react'
-
 import AlertIcon from 'react-feather/dist/icons/alert-circle'
-import { useNetwork } from '../../helpers/network'
 
+import IconLabel from '../IconLabel'
+import { useNetwork } from '../../helpers/network'
 import styles from './offline.module.css'
 
 const OfflineIndicator = () => {
@@ -11,10 +11,9 @@ const OfflineIndicator = () => {
   if (isOnline) return null
 
   return (
-    <div className={styles.offline}>
-      <AlertIcon size={16} />
-      <span>offline</span>
-    </div>
+    <IconLabel icon={AlertIcon} size={16} className={styles.offline}>
+      offline
+    </IconLabel>
   )
 }
 

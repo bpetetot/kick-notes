@@ -1,0 +1,30 @@
+.explorer {
+  font-size: 1.3rem;
+  line-height: 1.3rem;
+}
+
+.infobar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 20px;
+  border-bottom: 1px solid #ddd;
+  padding: 1rem;
+}
+
+.list {
+  padding: 1rem;
+}
+
+.item {
+  list-style: none;
+  cursor: pointer;
+}
+
+.item:hover {
+  text-decoration: underline;
+}
+
+.item.selected {
+  font-weight: 600;
+}

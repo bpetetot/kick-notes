@@ -4,3 +4,7 @@
   justify-content: space-between;
   border-right: 1px solid #ddd;
 }
+
+.actions {
+  padding: 1rem;
+}

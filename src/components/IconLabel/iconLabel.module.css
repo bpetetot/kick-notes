@@ -1,0 +1,8 @@
+.iconLabel {
+  display: flex;
+  align-items: center;
+}
+
+.iconLabel > span {
+  margin-left: 0.4rem;
+}
