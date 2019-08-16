@@ -6,7 +6,7 @@ import { NetworkProvider } from './helpers/network'
 import * as git from './git'
 import * as firebase from './firebase'
 import App from './app'
-import './index.css'
+import './styles/base.css'
 
 firebase.initialize()
 

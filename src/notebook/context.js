@@ -1,13 +1,20 @@
 import React, { useEffect, useContext, useState } from 'react'
 
-import { list } from '../git'
+import { list, ROOT_FOLDER } from '../git'
 
 const NotebookContext = React.createContext()
 
 export const useNotebook = () => useContext(NotebookContext)
 
-export const NotebookProvider = ({ children, defaultNotebook }) => {
-  const [currentNotebook, setCurrentNotebook] = useState(defaultNotebook)
+const DEFAULT_NOTEBOOK = {
+  file: 'All notebooks',
+  path: ROOT_FOLDER,
+  level: 0,
+  isDirectory: true,
+}
+
+export const NotebookProvider = ({ children }) => {
+  const [currentNotebook, setCurrentNotebook] = useState(DEFAULT_NOTEBOOK)
   const [notes, setNotes] = useState([])
 
   useEffect(() => {
@@ -17,11 +24,9 @@ export const NotebookProvider = ({ children, defaultNotebook }) => {
 
   const openNotebook = async notebook => {
     if (!notebook.isDirectory) return
-    const _notes = await list(notebook.path)
     if (!notebook.parent) {
       notebook.parent = currentNotebook
     }
-    setNotes(_notes)
     setCurrentNotebook(notebook)
   }
 

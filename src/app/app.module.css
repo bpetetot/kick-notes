@@ -1,0 +1,9 @@
+.app {
+  height: 100vh;
+  overflow: hidden;
+}
+
+.wrapper {
+  height: calc(100vh - 56px);
+  overflow: hidden;
+}

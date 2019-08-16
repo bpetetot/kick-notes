@@ -1,0 +1,25 @@
+.infobar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 20px;
+  border-bottom: 1px solid #ddd;
+  padding: 1rem;
+  font-size: 1.3rem;
+  line-height: 1.3rem;
+}
+
+.wrapper {
+  height: 100%;
+  overflow: hidden;
+}
+
+.editor {
+  padding: 1rem;
+  height: calc(100% - 63px);
+  overflow: scroll;
+}
+
+.editor:focus {
+  outline: none;
+}

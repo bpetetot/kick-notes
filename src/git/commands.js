@@ -6,17 +6,16 @@ import { existsFolder } from './fs'
 
 const getCredentials = user => utils.auth(user.username, user.token)
 
-export const getRepoFolder = user => `/${user.uid}`
+export const ROOT_FOLDER = '/kick-notes'
 
 export const fetchRepo = async (user, onProgress) => {
   if (onProgress) getEmitter().on('progress', onProgress)
 
-  const repoFolder = getRepoFolder(user)
-  const exists = await existsFolder(repoFolder)
+  const exists = await existsFolder(ROOT_FOLDER)
   if (exists) {
     await pullRepo(user)
   } else {
-    await getFS().mkdir(repoFolder)
+    await getFS().mkdir(ROOT_FOLDER)
     await cloneRepo(user)
   }
 
@@ -26,7 +25,7 @@ export const fetchRepo = async (user, onProgress) => {
 const pullRepo = user => {
   return pull({
     ...getCredentials(user),
-    dir: getRepoFolder(user),
+    dir: ROOT_FOLDER,
     corsProxy: CORS_PROXY,
     url: getRepoUrl(),
     ref: 'master',
@@ -39,7 +38,7 @@ const pullRepo = user => {
 const cloneRepo = user => {
   return clone({
     ...getCredentials(user),
-    dir: getRepoFolder(user),
+    dir: ROOT_FOLDER,
     corsProxy: CORS_PROXY,
     url: getRepoUrl(),
     ref: 'master',

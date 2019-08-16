@@ -1,0 +1,27 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 1rem;
+  border-bottom: 1px solid #ddd;
+  height: 56px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+}
+
+.title {
+  font-weight: 600;
+  margin-left: 2rem;
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+}
+
+.nav > * {
+  margin-left: 2rem;
+}

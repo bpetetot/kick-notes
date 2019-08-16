@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 
 import { fetchRepo } from '../git'
 
@@ -7,15 +7,20 @@ const SyncContext = React.createContext()
 export const useSync = () => useContext(SyncContext)
 
 export const SyncProvider = ({ children, user, isOnline }) => {
+  const [isSync, setIsSync] = useState(false)
+
   useEffect(() => {
     if (!user) return
     const load = async () => {
       if (isOnline) {
         await fetchRepo(user, console.log)
+        setIsSync(true)
       }
     }
     load()
   }, [user, isOnline]) // eslint-disable-line
 
-  return <SyncContext.Provider value={{}}>{children}</SyncContext.Provider>
+  return (
+    <SyncContext.Provider value={{ isSync }}>{children}</SyncContext.Provider>
+  )
 }

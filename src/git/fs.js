@@ -18,7 +18,7 @@ export const existsFolder = async filepath => {
 
 export const list = async filepath => {
   const exist = await existsFolder(filepath)
-  if (!exist) return
+  if (!exist) return []
 
   const filenames = await getFS().readdir(filepath)
 

@@ -12,11 +12,13 @@
   },
   "dependencies": {
     "@isomorphic-git/lightning-fs": "^3.3.0",
+    "classnames": "^2.2.6",
     "events": "^3.0.0",
     "firebase": "^6.3.5",
     "isomorphic-git": "^0.60.1",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
+    "react-feather": "^2.0.3",
     "react-router-dom": "^5.0.1",
     "react-scripts": "^3.1.1"
   },

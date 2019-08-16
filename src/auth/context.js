@@ -7,10 +7,6 @@ const AuthContext = React.createContext()
 
 export const useAuth = () => useContext(AuthContext)
 
-const redirectTo = (path = '/') => {
-  window.history.replaceState({}, document.title, path)
-}
-
 export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState()
   const [user, setUser] = useState()
@@ -45,24 +41,23 @@ export const AuthProvider = ({ children }) => {
           })
           setIsAuthenticated(true)
         }
+      } else {
+        setToken(null)
+        setUser(null)
+        setIsAuthenticated(false)
       }
       setLoading(false)
     })
   }, []) // eslint-disable-line
 
-  const login = () => {
+  const login = async () => {
     const provider = new firebase.auth.GithubAuthProvider()
     provider.addScope('repo')
-    firebase.auth().signInWithRedirect(provider)
+    await firebase.auth().signInWithRedirect(provider)
   }
 
-  const logout = () => {
-    firebase.auth().signOut()
-    setToken(null)
-    setUser(null)
-    setIsAuthenticated(false)
-    setLoading(false)
-    redirectTo('/')
+  const logout = async () => {
+    await firebase.auth().signOut()
   }
 
   return (
