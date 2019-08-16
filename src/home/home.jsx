@@ -24,7 +24,9 @@ const Home = () => {
             <Sidebar
               className={cn(styles.sidebar, { [styles.open]: isOpen })}
             />
-            <Note className={cn(styles.content, { [styles.open]: !isOpen })} />
+            <div className={cn(styles.content, { [styles.open]: !isOpen })}>
+              <Note />
+            </div>
           </div>
         </NoteProvider>
       </NotebookProvider>

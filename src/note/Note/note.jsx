@@ -1,4 +1,5 @@
 import React from 'react'
+import cn from 'classnames'
 
 import { useNote } from '../context'
 
@@ -8,7 +9,7 @@ const Note = ({ className }) => {
   const { currentNote, content, onEditNote, isSaved } = useNote()
 
   return (
-    <div className={className}>
+    <div className={cn(styles.note, className)}>
       {currentNote && (
         <>
           <div className={styles.infobar}>

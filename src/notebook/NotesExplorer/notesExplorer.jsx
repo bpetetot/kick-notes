@@ -1,7 +1,8 @@
 import React from 'react'
 import cn from 'classnames'
 import ArrowUpIcon from 'react-feather/dist/icons/arrow-up'
-import NotebookIcon from 'react-feather/dist/icons/layers'
+import AddIcon from 'react-feather/dist/icons/plus'
+import NotebookIcon from 'react-feather/dist/icons/folder'
 import NoteIcon from 'react-feather/dist/icons/file'
 
 import { useNote } from '../../note'
@@ -25,11 +26,18 @@ const NotesExplorer = ({ className }) => {
     <div className={cn(styles.explorer, className)}>
       <div className={styles.infobar}>
         <div>{currentNotebook && currentNotebook.file}</div>
-        {currentNotebook && currentNotebook.level > 0 && (
-          <button className="link" onClick={goBack}>
-            <ArrowUpIcon size={16} />
-          </button>
-        )}
+        <div>
+          {currentNotebook && currentNotebook.level > 0 && (
+            <button className="link" onClick={goBack}>
+              <ArrowUpIcon size={16} />
+            </button>
+          )}
+          {currentNotebook && (
+            <button className="link" onClick={console.log}>
+              <AddIcon size={16} />
+            </button>
+          )}
+        </div>
       </div>
       <ul className={styles.list}>
         {notes.map(item => (

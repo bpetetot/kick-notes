@@ -1,3 +1,8 @@
+.note {
+  height: 100%;
+  width: 100%;
+}
+
 .infobar {
   display: flex;
   align-items: center;
@@ -11,12 +16,12 @@
 
 .wrapper {
   height: 100%;
-  overflow: hidden;
+  width: 100%;
 }
 
 .editor {
   padding: 1rem;
-  height: calc(100% - 63px);
+  height: calc(100% - 60px);
   overflow: scroll;
 }
 
