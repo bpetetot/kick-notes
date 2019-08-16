@@ -2,7 +2,8 @@ import React from 'react'
 
 import { useAuth } from '../auth'
 import { useNetwork } from '../helpers/network'
-import { NotesProvider, Notes, Note } from '../notes'
+import { SyncProvider, getRepoFolder } from '../git'
+import { NotebookProvider, NoteProvider, Notes, Note } from '../notes'
 
 import styles from './home.module.css'
 
@@ -20,14 +21,24 @@ const Home = () => {
       </header>
 
       {isAuthenticated && (
-        <NotesProvider user={user} isOnline={isOnline}>
-          <h2>{user.displayName}</h2>
-          <p>
-            <code>{JSON.stringify(user, null, 2)}</code>
-          </p>
-          <Notes />
-          <Note />
-        </NotesProvider>
+        <SyncProvider user={user} isOnline={isOnline}>
+          <NotebookProvider
+            defaultNotebook={{
+              path: getRepoFolder(user),
+              level: 0,
+              isDirectory: true,
+            }}
+          >
+            <NoteProvider>
+              <h2>{user.displayName}</h2>
+              <p>
+                <code>{JSON.stringify(user, null, 2)}</code>
+              </p>
+              <Notes />
+              <Note />
+            </NoteProvider>
+          </NotebookProvider>
+        </SyncProvider>
       )}
     </div>
   )

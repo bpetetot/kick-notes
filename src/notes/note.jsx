@@ -1,20 +1,23 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 
-import { readFile } from '../git'
-import { useNotes } from '../notes'
+import { useNote } from './noteContext'
 
 const Note = () => {
-  const { currentNote } = useNotes()
-  const [content, setContent] = useState()
-
-  useEffect(() => {
-    if (!currentNote) return
-    readFile(currentNote.path).then(fileContent => setContent(fileContent))
-  }, [currentNote]) // eslint-disable-line
+  const { currentNote, content, onEditNote, isSaved } = useNote()
 
   if (!currentNote) return null
 
-  return <div>{content}</div>
+  return (
+    <>
+      <strong>{isSaved ? 'Saved' : 'Not saved'}</strong>
+      <div
+        onInput={onEditNote}
+        onBlur={onEditNote}
+        contentEditable
+        dangerouslySetInnerHTML={{ __html: content }}
+      />
+    </>
+  )
 }
 
 export default Note

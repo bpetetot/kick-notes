@@ -1,18 +1,28 @@
 import React from 'react'
 
-import { useNotes } from '../notes'
+import { useNotebook } from './notebookContext'
+import { useNote } from './noteContext'
 
 const Notes = () => {
-  const { currentFolder, notes, open, goBack } = useNotes()
+  const { currentNotebook, notes, openNotebook, goBack } = useNotebook()
+  const { openNote } = useNote()
+
+  const open = item => {
+    if (item.isDirectory) {
+      openNotebook(item)
+    } else {
+      openNote(item)
+    }
+  }
 
   return (
     <div>
-      {currentFolder && currentFolder.level > 0 && (
+      {currentNotebook && currentNotebook.level > 0 && (
         <button onClick={goBack}>Back</button>
       )}
-      {notes.map(note => (
-        <div key={note.file} onClick={() => open(note)}>
-          {note.file}
+      {notes.map(item => (
+        <div key={item.file} onClick={() => open(item)}>
+          {item.file}
         </div>
       ))}
     </div>
