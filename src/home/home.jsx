@@ -9,7 +9,6 @@ import { NoteProvider, Note } from '../note'
 import { useSider } from '../components/Sider'
 import Sidebar from './Sidebar'
 
-import theme from '../styles/theme.module.css'
 import styles from './home.module.css'
 
 const Home = () => {
@@ -21,7 +20,7 @@ const Home = () => {
     <SyncProvider user={user} isOnline={isOnline}>
       <NotebookProvider>
         <NoteProvider>
-          <div className={cn(theme.default, styles.layout)}>
+          <div className={styles.layout}>
             <Sidebar
               className={cn(styles.sidebar, { [styles.open]: isOpen })}
             />

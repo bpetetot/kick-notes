@@ -1,4 +1,5 @@
 import React from 'react'
+import cn from 'classnames'
 import { BrowserRouter, Route } from 'react-router-dom'
 
 import { useAuth, AUTH_REDIRECT_PATH } from '../auth'
@@ -8,6 +9,7 @@ import Home from '../home'
 import Header from './Header'
 import PrivateRoute from '../auth/PrivateRoute'
 
+import theme from '../styles/theme.module.css'
 import styles from './app.module.css'
 
 const App = () => {
@@ -15,7 +17,7 @@ const App = () => {
 
   return (
     <BrowserRouter>
-      <div className={styles.app}>
+      <div className={cn(styles.app, theme.default)}>
         <SiderProvider>
           <Header />
           <div className={styles.wrapper}>
