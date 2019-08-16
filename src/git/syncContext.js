@@ -7,20 +7,22 @@ const SyncContext = React.createContext()
 export const useSync = () => useContext(SyncContext)
 
 export const SyncProvider = ({ children, user, isOnline }) => {
-  const [isSync, setIsSync] = useState(false)
+  const [isRepoLoaded, setIsRepoLoaded] = useState(false)
 
   useEffect(() => {
     if (!user) return
     const load = async () => {
       if (isOnline) {
         await fetchRepo(user, console.log)
-        setIsSync(true)
       }
+      setIsRepoLoaded(true)
     }
     load()
   }, [user, isOnline]) // eslint-disable-line
 
   return (
-    <SyncContext.Provider value={{ isSync }}>{children}</SyncContext.Provider>
+    <SyncContext.Provider value={{ isRepoLoaded }}>
+      {children}
+    </SyncContext.Provider>
   )
 }

@@ -1,6 +1,6 @@
 import React, { useEffect, useContext, useState } from 'react'
 
-import { list, ROOT_FOLDER } from '../git'
+import { useSync, list, ROOT_FOLDER } from '../git'
 
 const NotebookContext = React.createContext()
 
@@ -16,11 +16,12 @@ const DEFAULT_NOTEBOOK = {
 export const NotebookProvider = ({ children }) => {
   const [currentNotebook, setCurrentNotebook] = useState(DEFAULT_NOTEBOOK)
   const [notes, setNotes] = useState([])
+  const { isRepoLoaded } = useSync()
 
   useEffect(() => {
-    if (!currentNotebook) return
+    if (!isRepoLoaded || !currentNotebook) return
     list(currentNotebook.path).then(notes => setNotes(notes))
-  }, [currentNotebook])
+  }, [currentNotebook, isRepoLoaded])
 
   const openNotebook = async notebook => {
     if (!notebook.isDirectory) return
