@@ -21,10 +21,15 @@
 
 .editor {
   padding: 1rem;
-  height: calc(100% - 60px);
-  overflow: scroll;
+  height: calc(100% - 42px);
+  width: 100%;
+  outline: none;
+  border: none;
+  resize: none;
+  font-size: 1.5rem;
 }
 
 .editor:focus {
   outline: none;
+  border: none;
 }

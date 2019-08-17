@@ -37,12 +37,11 @@ const Note = ({ className, location }) => {
             <div>{note.file}</div>
             <div>{isSaved ? 'Saved' : 'Not saved'}</div>
           </div>
-          <div
+          <textarea
             className={styles.editor}
-            onInput={onEditNote}
+            onChange={onEditNote}
             onBlur={onEditNote}
-            contentEditable
-            dangerouslySetInnerHTML={{ __html: note.content }}
+            defaultValue={note.content}
           />
         </>
       ) : (
