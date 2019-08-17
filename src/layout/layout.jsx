@@ -2,14 +2,14 @@ import React from 'react'
 import cn from 'classnames'
 import { BrowserRouter, Route } from 'react-router-dom'
 
-import { useAuth, AUTH_REDIRECT_PATH } from '../services/auth'
-import { SiderProvider } from '../components/Sider'
-import Loading from '../components/Loading'
+import { useAuth, AUTH_REDIRECT_PATH } from 'services/auth'
+import { SiderProvider } from 'components/Sider'
+import Loading from 'components/Loading'
+import PrivateRoute from 'services/auth/PrivateRoute'
+import theme from 'styles/theme.module.css'
+
 import App from '../app'
 import Header from './Header'
-import PrivateRoute from '../services/auth/PrivateRoute'
-
-import theme from '../styles/theme.module.css'
 import styles from './layout.module.css'
 
 const Layout = () => {

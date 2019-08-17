@@ -1,8 +1,9 @@
 import React, { useEffect, useContext, useState } from 'react'
 import { withRouter } from 'react-router-dom'
 
-import { useSync } from '../services/git'
-import { getQueryParam } from '../services/router'
+import { useSync } from 'services/git'
+import { getQueryParam } from 'services/router'
+
 import { getNotebook, listNotes } from './service'
 
 const NotebookContext = React.createContext()

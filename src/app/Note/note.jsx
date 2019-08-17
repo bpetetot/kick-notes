@@ -2,8 +2,9 @@ import React, { useState, useEffect } from 'react'
 import { withRouter } from 'react-router-dom'
 import cn from 'classnames'
 
-import { useSync } from '../../services/git'
-import { getQueryParam } from '../../services/router'
+import { useSync } from 'services/git'
+import { getQueryParam } from 'services/router'
+
 import { getNote } from '../service'
 import AddNote from '../Add'
 import styles from './note.module.css'

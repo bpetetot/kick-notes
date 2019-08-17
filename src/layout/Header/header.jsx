@@ -1,9 +1,9 @@
 import React from 'react'
 import cn from 'classnames'
 
-import { useAuth } from '../../services/auth'
-import { SiderButton } from '../../components/Sider'
-import OfflineIndicator from '../../components/Offline'
+import { useAuth } from 'services/auth'
+import { SiderButton } from 'components/Sider'
+import OfflineIndicator from 'components/Offline'
 
 import styles from './header.module.css'
 
