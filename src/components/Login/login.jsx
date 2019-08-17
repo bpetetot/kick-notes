@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { useAuth } from '../context'
+import { useAuth } from 'services/auth'
 
 import styles from './login.module.css'
 

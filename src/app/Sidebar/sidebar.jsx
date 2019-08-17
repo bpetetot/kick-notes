@@ -1,7 +1,7 @@
 import React from 'react'
 import cn from 'classnames'
 
-import Logout from 'services/auth/Logout'
+import Logout from 'components/Logout'
 
 import NotesExplorer from '../NotesExplorer'
 import styles from './sidebar.module.css'

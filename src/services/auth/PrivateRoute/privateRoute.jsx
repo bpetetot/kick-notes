@@ -2,8 +2,7 @@ import React from 'react'
 import { Route } from 'react-router-dom'
 
 import { useAuth } from 'services/auth'
-
-import Login from '../Login'
+import Login from 'components/Login'
 
 const PrivateRoute = ({ component: Component, path, ...rest }) => {
   const { isAuthenticated, loading } = useAuth()
