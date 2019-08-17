@@ -1,12 +1,14 @@
 import React from 'react'
 import cn from 'classnames'
+import { Route } from 'react-router-dom'
 
 import { useAuth } from '../auth'
 import { useNetwork } from '../helpers/network'
 import { SyncProvider } from '../git'
-import { NotebookProvider } from '../notebook'
-import { NoteProvider, Note } from '../note'
 import { useSider } from '../components/Sider'
+import NotebookProvider from '../notebook/context'
+import Note from '../notebook/Note'
+import AddNote from '../notebook/Add'
 import Sidebar from './Sidebar'
 
 import styles from './home.module.css'
@@ -19,16 +21,13 @@ const Home = () => {
   return (
     <SyncProvider user={user} isOnline={isOnline}>
       <NotebookProvider>
-        <NoteProvider>
-          <div className={styles.layout}>
-            <Sidebar
-              className={cn(styles.sidebar, { [styles.open]: isOpen })}
-            />
-            <div className={cn(styles.content, { [styles.open]: !isOpen })}>
-              <Note />
-            </div>
+        <div className={styles.layout}>
+          <Sidebar className={cn(styles.sidebar, { [styles.open]: isOpen })} />
+          <div className={cn(styles.content, { [styles.open]: !isOpen })}>
+            <Route exact path="/note" component={Note} />
+            <Route exact path="/add" component={AddNote} />
           </div>
-        </NoteProvider>
+        </div>
       </NotebookProvider>
     </SyncProvider>
   )

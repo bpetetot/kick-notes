@@ -22,8 +22,8 @@ const App = () => {
           <Header />
           <div className={styles.wrapper}>
             {loading && <Loading />}
-            <PrivateRoute exact path="/" component={Home} />
             <Route exact path={AUTH_REDIRECT_PATH} />
+            <PrivateRoute path="/" component={Home} />
           </div>
         </SiderProvider>
       </div>

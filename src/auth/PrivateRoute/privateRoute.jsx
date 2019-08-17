@@ -7,12 +7,6 @@ import Login from '../Login'
 const PrivateRoute = ({ component: Component, path, ...rest }) => {
   const { isAuthenticated } = useAuth()
 
-  console.log({
-    isAuthenticated,
-    path,
-    Component,
-  })
-
   const render = props => {
     if (!Component) return null
     if (!isAuthenticated) return <Login {...props} />

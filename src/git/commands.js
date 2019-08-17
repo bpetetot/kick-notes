@@ -1,12 +1,10 @@
 import { clone, pull, utils } from 'isomorphic-git'
 
-import { getRepoUrl, CORS_PROXY } from './config'
+import { getRepoUrl, CORS_PROXY, ROOT_FOLDER } from './config'
 import { getFS, getEmitter } from './init'
 import { existsFolder } from './fs'
 
 const getCredentials = user => utils.auth(user.username, user.token)
-
-export const ROOT_FOLDER = '/kick-notes'
 
 export const fetchRepo = async (user, onProgress) => {
   if (onProgress) getEmitter().on('progress', onProgress)
