@@ -17,11 +17,25 @@ html {
   font-size: 62.5%;
 }
 body {
+  /* colors */
+  --accent-color: #1eaedb;
+  --accent-dark-color: #0fa0ce;
+  --font-color: #222;
+  --error-color: #dc3545;
+
+  /* font size */
+  --font-size-normal: 1.5rem;
+  --font-size-small: 1.3rem;
+
+  /* font weight */
+  --font-regular: 400;
+  --font-bold: 600;
+
   font-size: 1.5em; /* currently ems cause chrome bug misinterpreting rems on body element */
-  font-weight: 400;
+  font-weight: var(--font-regular);
   font-family: 'Raleway', 'HelveticaNeue', 'Helvetica Neue', Helvetica, Arial,
     sans-serif;
-  color: #222;
+  color: var(--font-color);
   margin: 0;
 }
 
@@ -35,7 +49,7 @@ h5,
 h6 {
   margin-top: 0;
   margin-bottom: 2rem;
-  font-weight: 300;
+  font-weight: var(--font-regular);
 }
 h1 {
   font-size: 4rem;
@@ -68,28 +82,6 @@ h6 {
   letter-spacing: 0;
 }
 
-/* Larger than phablet */
-@media (min-width: 550px) {
-  h1 {
-    font-size: 5rem;
-  }
-  h2 {
-    font-size: 4.2rem;
-  }
-  h3 {
-    font-size: 3.6rem;
-  }
-  h4 {
-    font-size: 3rem;
-  }
-  h5 {
-    font-size: 2.4rem;
-  }
-  h6 {
-    font-size: 1.5rem;
-  }
-}
-
 p {
   margin-top: 0;
 }
@@ -97,10 +89,10 @@ p {
 /* Links
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 a {
-  color: #1eaedb;
+  color: var(--accent-color);
 }
 a:hover {
-  color: #0fa0ce;
+  color: var(--accent-dark-color);
 }
 
 /* Buttons
@@ -116,7 +108,7 @@ input[type='button'] {
   color: #555;
   text-align: center;
   font-size: 11px;
-  font-weight: 600;
+  font-weight: var(--font-bold);
   line-height: 38px;
   letter-spacing: 0.1rem;
   text-transform: uppercase;
@@ -162,12 +154,12 @@ input[type='submit'].button-primary:focus,
 input[type='reset'].button-primary:focus,
 input[type='button'].button-primary:focus {
   color: #fff;
-  background-color: #1eaedb;
-  border-color: #1eaedb;
+  background-color: var(--accent-color);
+  border-color: var(--accent-color);
 }
 
 button.link {
-  color: #1eaedb;
+  color: var(--accent-color);
   padding: 0;
   text-align: initial;
   text-transform: initial;
@@ -176,11 +168,11 @@ button.link {
   border: none;
   letter-spacing: 0;
   font-size: inherit;
-  font-weight: normal;
+  font-weight: var(--font-regular);
 }
 
 button.link:hover {
-  color: #0fa0ce;
+  color: var(--accent-dark-color);
   text-decoration: underline;
 }
 
@@ -236,7 +228,7 @@ label,
 legend {
   display: block;
   margin-bottom: 0.5rem;
-  font-weight: 600;
+  font-weight: var(--font-bold);
 }
 fieldset {
   padding: 0;
@@ -249,14 +241,13 @@ input[type='radio'] {
 label > .label-body {
   display: inline-block;
   margin-left: 0.5rem;
-  font-weight: normal;
+  font-weight: var(--font-regular);
 }
 textarea {
-  font-size: 1.3rem;
-  font-weight: 400;
+  font-weight: var(--font-regular);
   font-family: 'Raleway', 'HelveticaNeue', 'Helvetica Neue', Helvetica, Arial,
     sans-serif;
-  color: #222;
+  color: var(--font-color);
 }
 
 /* Lists

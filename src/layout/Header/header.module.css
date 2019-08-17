@@ -4,7 +4,7 @@
   align-items: center;
   padding: 0 1rem;
   border-bottom: 1px solid #ddd;
-  height: 56px;
+  height: var(--header-bar-height);
 }
 
 .brand {
@@ -13,7 +13,7 @@
 }
 
 .title {
-  font-weight: 600;
+  font-weight: var(--font-bold);
   margin-left: 2rem;
 }
 

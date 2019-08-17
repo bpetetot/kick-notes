@@ -1,12 +1,15 @@
 .layout {
   height: 100vh;
   overflow: hidden;
+
+  --header-bar-height: 50px;
+  --infobar-bar-height: 20px;
 }
 
 .main {
   display: flex;
   position: relative;
   width: 100%;
-  height: calc(100vh - 56px);
+  height: calc(100vh - var(--infobar-bar-height));
   overflow: hidden;
 }

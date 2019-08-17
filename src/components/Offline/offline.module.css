@@ -3,6 +3,6 @@
 }
 
 .offline > span {
-  font-size: 1.2rem;
-  line-height: 16px;
+  font-size: var(--font-size-small);
+  line-height: var(--font-size-small);
 }

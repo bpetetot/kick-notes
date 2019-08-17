@@ -7,11 +7,11 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 20px;
+  height: var(--infobar-bar-height);
   border-bottom: 1px solid #ddd;
   padding: 1rem;
-  font-size: 1.3rem;
-  line-height: 1.3rem;
+  font-size: var(--font-size-small);
+  line-height: var(--font-size-small);
 }
 
 .wrapper {
@@ -21,12 +21,12 @@
 
 .editor {
   padding: 1rem;
-  height: calc(100% - 42px);
+  height: calc(100% - var(--header-bar-height) - var(--infobar-bar-height));
   width: 100%;
   outline: none;
   border: none;
   resize: none;
-  font-size: 1.5rem;
+  font-size: var(--font-size-normal);
 }
 
 .editor:focus {

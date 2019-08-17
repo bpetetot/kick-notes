@@ -1,13 +1,13 @@
 .explorer {
-  font-size: 1.3rem;
-  line-height: 1.3rem;
+  font-size: var(--font-size-small);
+  line-height: var(--font-size-small);
 }
 
 .infobar {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 20px;
+  height: var(--infobar-bar-height);
   border-bottom: 1px solid #ddd;
   padding: 1rem;
 }
@@ -26,10 +26,10 @@
 }
 
 .item.selected {
-  font-weight: 600;
+  font-weight: var(--font-bold);
 }
 
 .item > a {
   text-decoration: none;
-  color: #222;
+  color: var(--font-color);
 }
