@@ -1,4 +1,4 @@
-import fs, { stat, ROOT_FOLDER } from 'services/fs'
+import fs, { stat, ROOT_FOLDER } from '../fs'
 
 const DEFAULT_NOTEBOOK = {
   file: 'All notebooks',

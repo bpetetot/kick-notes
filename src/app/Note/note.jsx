@@ -4,8 +4,8 @@ import cn from 'classnames'
 
 import { useSync } from 'services/git'
 import { getQueryParam } from 'services/router'
+import { getNote } from 'services/notebook'
 
-import { getNote } from '../service'
 import AddNote from '../Add'
 import styles from './note.module.css'
 

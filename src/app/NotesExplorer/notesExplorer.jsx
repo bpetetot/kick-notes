@@ -7,10 +7,10 @@ import AddIcon from 'react-feather/dist/icons/plus'
 import NotebookIcon from 'react-feather/dist/icons/folder'
 import NoteIcon from 'react-feather/dist/icons/file'
 
+import { useNotebook } from 'services/notebook'
 import { getQueryParam } from 'services/router'
 import IconLabel from 'components/IconLabel'
 
-import { useNotebook } from '../context'
 import styles from './notesExplorer.module.css'
 
 const NotesExplorer = ({ className, location }) => {
