@@ -25,7 +25,7 @@ const Home = () => {
           <Sidebar className={cn(styles.sidebar, { [styles.open]: isOpen })} />
           <div className={cn(styles.content, { [styles.open]: !isOpen })}>
             <Route exact path="/note" component={Note} />
-            <Route exact path="/add" component={AddNote} />
+            <Route exact path="/" component={AddNote} />
           </div>
         </div>
       </NotebookProvider>

@@ -5,7 +5,7 @@ import styles from './add.module.css'
 const AddNote = () => {
   return (
     <div className={styles.addNote}>
-      <button class="button-primary">New note</button>
+      <button className="button-primary">New note</button>
       <button>New notebook</button>
     </div>
   )

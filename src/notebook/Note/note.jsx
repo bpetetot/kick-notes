@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react'
 import { withRouter } from 'react-router-dom'
 import cn from 'classnames'
 
+import AddNote from '../Add'
 import { useSync, getNote } from '../../git'
-
 import styles from './note.module.css'
 
 const Note = ({ className, location }) => {
@@ -31,7 +31,7 @@ const Note = ({ className, location }) => {
 
   return (
     <div className={cn(styles.note, className)}>
-      {note && (
+      {note ? (
         <>
           <div className={styles.infobar}>
             <div>{note.file}</div>
@@ -45,6 +45,8 @@ const Note = ({ className, location }) => {
             dangerouslySetInnerHTML={{ __html: note.content }}
           />
         </>
+      ) : (
+        <AddNote />
       )}
     </div>
   )

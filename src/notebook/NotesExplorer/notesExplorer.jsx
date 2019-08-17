@@ -33,7 +33,12 @@ const NotesExplorer = ({ className, location }) => {
             </Link>
           )}
           {currentNotebook && (
-            <Link to="/add">
+            <Link
+              to={{
+                pathname: '/note',
+                search: `?path=${currentNotebook.path}`,
+              }}
+            >
               <AddIcon size={16} />
             </Link>
           )}

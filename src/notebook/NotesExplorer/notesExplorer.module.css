@@ -25,10 +25,11 @@
   cursor: pointer;
 }
 
-.item:hover {
-  text-decoration: underline;
-}
-
 .item.selected {
   font-weight: 600;
+}
+
+.item > a {
+  text-decoration: none;
+  color: #222;
 }
