@@ -3,13 +3,14 @@
   overflow: hidden;
 
   --header-bar-height: 50px;
-  --infobar-bar-height: 20px;
+  --infobar-bar-height: 40px;
+  --sidebar-width: 240px;
 }
 
 .main {
   display: flex;
   position: relative;
   width: 100%;
-  height: calc(100vh - var(--infobar-bar-height));
+  height: calc(100vh - var(--header-bar-height));
   overflow: hidden;
 }

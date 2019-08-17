@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import { withRouter } from 'react-router-dom'
 import ArrowUpIcon from 'react-feather/dist/icons/arrow-up'
 import AddIcon from 'react-feather/dist/icons/plus'
-import NotebookIcon from 'react-feather/dist/icons/folder'
+import NotebookIcon from 'react-feather/dist/icons/layers'
 import NoteIcon from 'react-feather/dist/icons/file'
 
 import { useNotebook } from 'services/notebook'

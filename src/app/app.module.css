@@ -1,5 +1,4 @@
 .sidebar {
-  position: relative;
   transition: all 0.3s ease-out;
   width: 0;
   min-width: 0;
@@ -8,7 +7,7 @@
 }
 
 .sidebar.open {
-  min-width: 240px;
+  min-width: var(--sidebar-width);
 }
 
 .content {
