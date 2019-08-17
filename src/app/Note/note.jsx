@@ -36,7 +36,7 @@ const Note = ({ className, location }) => {
       {note ? (
         <>
           <div className={styles.infobar}>
-            <div>{note.file}</div>
+            <div>{note.name}</div>
             <div>{isSaved ? 'Saved' : 'Not saved'}</div>
           </div>
           <textarea

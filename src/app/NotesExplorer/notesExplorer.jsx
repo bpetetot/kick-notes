@@ -62,13 +62,13 @@ const NotesExplorer = ({ className, location }) => {
           >
             <Link
               to={{ pathname: '/note', search: `?path=${item.path}` }}
-              onClick={item.isFile ? closeSidebarOnMobile : undefined}
+              onClick={item.isNote ? closeSidebarOnMobile : undefined}
             >
               <IconLabel
-                icon={item.isDirectory ? NotebookIcon : NoteIcon}
+                icon={item.isNotebook ? NotebookIcon : NoteIcon}
                 size={16}
               >
-                {item.file}
+                {item.name}
               </IconLabel>
             </Link>
           </li>

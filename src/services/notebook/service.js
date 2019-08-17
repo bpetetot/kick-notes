@@ -1,10 +1,12 @@
 import fs, { stat, ROOT_FOLDER } from '../fs'
+import first from 'lodash/first'
+import last from 'lodash/last'
 
 const DEFAULT_NOTEBOOK = {
   file: 'All notebooks',
   path: ROOT_FOLDER,
   level: 0,
-  isDirectory: true,
+  isNotebook: true,
 }
 
 const getInfoNote = async filepath => {
@@ -16,11 +18,12 @@ const getInfoNote = async filepath => {
   return {
     file,
     path: filepath,
+    name: first(file.split('.')),
+    extension: last(file.split('.')),
     parent: pathArray.join('/'),
-    isFile: stats.isFile(),
-    isDirectory: stats.isDirectory(),
-    isDotFile: file.startsWith('.'),
-    extension: file.split('.').pop(),
+    isNote: stats.isFile(),
+    isNotebook: stats.isDirectory(),
+    isHidden: file.startsWith('.'),
     level: filepath.split('/').length - 2,
   }
 }
@@ -33,13 +36,13 @@ export const listNotes = async filepath => {
   )
 
   return filesinfo.filter(
-    file => (file.isDirectory && !file.isDotFile) || file.extension === 'md'
+    file => (file.isNotebook && !file.isHidden) || file.extension === 'md'
   )
 }
 
 export const getNote = async filepath => {
   const info = await getInfoNote(filepath)
-  if (!info || info.isDirectory) return
+  if (!info || info.isNotebook) return
   const uint8array = await fs.readFile(filepath)
   const content = new TextDecoder('utf-8').decode(uint8array)
 
@@ -51,7 +54,7 @@ export const getNotebook = async filepath => {
 
   if (!info) return DEFAULT_NOTEBOOK
 
-  if (info.isDirectory) return info
+  if (info.isNotebook) return info
 
   return getInfoNote(info.parent)
 }
