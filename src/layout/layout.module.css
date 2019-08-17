@@ -1,0 +1,12 @@
+.layout {
+  height: 100vh;
+  overflow: hidden;
+}
+
+.main {
+  display: flex;
+  position: relative;
+  width: 100%;
+  height: calc(100vh - 56px);
+  overflow: hidden;
+}

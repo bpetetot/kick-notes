@@ -1,7 +1,7 @@
 import React from 'react'
 import cn from 'classnames'
 
-import { useAuth } from '../../auth'
+import { useAuth } from '../../services/auth'
 import { SiderButton } from '../../components/Sider'
 import OfflineIndicator from '../../components/Offline'
 

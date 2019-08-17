@@ -1,9 +1,35 @@
-.app {
-  height: 100vh;
-  overflow: hidden;
+.sidebar {
+  position: relative;
+  transition: all 0.3s ease-out;
+  width: 0;
+  min-width: 0;
+  overflow-x: hidden;
+  white-space: nowrap;
 }
 
-.wrapper {
-  height: calc(100vh - 56px);
-  overflow: hidden;
+.sidebar.open {
+  min-width: 240px;
+}
+
+.content {
+  height: 100%;
+  width: 100%;
+}
+
+@media (max-width: 550px) {
+  .sidebar {
+    width: 0;
+  }
+
+  .sidebar.open {
+    width: 100%;
+  }
+
+  .content {
+    width: 0;
+  }
+
+  .content.open {
+    width: 100%;
+  }
 }

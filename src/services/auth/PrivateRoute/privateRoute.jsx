@@ -5,10 +5,10 @@ import { useAuth } from '../../auth'
 import Login from '../Login'
 
 const PrivateRoute = ({ component: Component, path, ...rest }) => {
-  const { isAuthenticated } = useAuth()
+  const { isAuthenticated, loading } = useAuth()
 
   const render = props => {
-    if (!Component) return null
+    if (loading) return null
     if (!isAuthenticated) return <Login {...props} />
     return <Component {...props} />
   }

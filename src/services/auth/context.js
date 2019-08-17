@@ -1,7 +1,7 @@
 import firebase from 'firebase/app'
 
 import React, { useState, useEffect, useContext } from 'react'
-import { useStorage } from '../services/storage'
+import { useStorage } from '../storage'
 
 const AuthContext = React.createContext()
 
