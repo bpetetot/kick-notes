@@ -1,5 +1,6 @@
 .explorer {
   flex-grow: 1;
+  overflow: hidden;
 }
 
 .infobar {
@@ -19,6 +20,8 @@
 
 .list {
   padding: 1rem;
+  overflow: scroll;
+  height: calc(100% - var(--infobar-bar-height));
 }
 
 .item {

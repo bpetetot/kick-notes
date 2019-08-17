@@ -1,17 +1,18 @@
 import React, { useState, useEffect } from 'react'
 import { withRouter } from 'react-router-dom'
 import cn from 'classnames'
+import DeleteIcon from 'react-feather/dist/icons/trash'
 
 import { useSync } from 'services/git'
 import { useSettings } from 'services/settings'
 import { getQueryParam } from 'services/router'
-import { getNote } from 'services/notebook'
+import { getNote, deleteNote } from 'services/notebook'
 import MarkdownPreview from 'components/MarkdownPreview'
 
 import AddNote from '../Add'
 import styles from './note.module.css'
 
-const Note = ({ className, location }) => {
+const Note = ({ className, location, history }) => {
   const [note, setNote] = useState()
   const [isSaved, setIsSaved] = useState(true)
   const { isRepoLoaded } = useSync()
@@ -34,13 +35,28 @@ const Note = ({ className, location }) => {
     console.log(event.target.innerText)
   }
 
+  const onClickDeleteNote = async () => {
+    history.push({
+      pathname: '/note',
+      search: `?path=${note.parent}`,
+    })
+    await deleteNote(note)
+  }
+
   return (
     <div className={cn(styles.note, className)}>
       {note ? (
         <>
           <div className={styles.infobar}>
             <div>{note.name}</div>
-            <div>{isSaved ? 'Saved' : 'Not saved'}</div>
+            <div className={styles.actions}>
+              {!isSaved && <div>Not saved</div>}
+              <DeleteIcon
+                className="link"
+                size={16}
+                onClick={onClickDeleteNote}
+              />
+            </div>
           </div>
           {settings.editorMode ? (
             <textarea

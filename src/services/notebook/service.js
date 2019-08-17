@@ -1,6 +1,8 @@
-import fs, { stat, ROOT_FOLDER } from '../fs'
+import fs, { stat, generateFilename, ROOT_FOLDER } from '../fs'
 import first from 'lodash/first'
 import last from 'lodash/last'
+
+const DEFAULT_NOTE_NAME = 'New note.md'
 
 const DEFAULT_NOTEBOOK = {
   file: 'All notebooks',
@@ -57,4 +59,23 @@ export const getNotebook = async filepath => {
   if (info.isNotebook) return info
 
   return getInfoNote(info.parent)
+}
+
+export const addNote = async parent => {
+  if (!parent || !parent.isNotebook) return
+
+  const filepath = await generateFilename(parent.path, DEFAULT_NOTE_NAME)
+  await fs.writeFile(filepath, '# New note', { encoding: 'utf8' })
+
+  return getInfoNote(filepath)
+}
+
+export const deleteNote = async note => {
+  if (!note || note.isNotebook) return
+
+  try {
+    await fs.unlink(note.path)
+  } catch (error) {
+    console.log(error)
+  }
 }

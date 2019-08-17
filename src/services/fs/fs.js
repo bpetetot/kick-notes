@@ -15,3 +15,17 @@ export const existsFolder = async filepath => {
   if (!statFile) return false
   return statFile.type === 'dir'
 }
+
+export const generateFilename = async (path, filename, increment = 0) => {
+  const [name, extension] = filename.split('.')
+
+  let filepath = `${path}/${filename}`
+  if (increment > 0) {
+    filepath = `${path}/${name} ${increment}.${extension}`
+  }
+  const stats = await stat(filepath)
+  if (stats) {
+    return generateFilename(path, filename, increment + 1)
+  }
+  return filepath
+}

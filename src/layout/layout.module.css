@@ -12,5 +12,6 @@
   position: relative;
   width: 100%;
   height: calc(100vh - var(--header-bar-height));
+  max-height: calc(100vh - var(--header-bar-height));
   overflow: hidden;
 }

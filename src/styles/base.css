@@ -163,7 +163,8 @@ input[type='button'].button-primary:focus {
   border-color: var(--accent-color);
 }
 
-button.link {
+button.link,
+svg.link {
   color: var(--accent-color);
   padding: 0;
   text-align: initial;
@@ -174,9 +175,11 @@ button.link {
   letter-spacing: 0;
   font-size: inherit;
   font-weight: var(--font-regular);
+  cursor: pointer;
 }
 
-button.link:hover {
+button.link:hover,
+svg.link:hover {
   color: var(--accent-dark-color);
   text-decoration: underline;
 }
