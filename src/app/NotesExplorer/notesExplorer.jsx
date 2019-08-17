@@ -9,12 +9,18 @@ import NoteIcon from 'react-feather/dist/icons/file'
 
 import { useNotebook } from 'services/notebook'
 import { getQueryParam } from 'services/router'
+import { useDeviceDetect } from 'services/device'
+import { useSider } from 'components/Sider'
 import IconLabel from 'components/IconLabel'
 
 import styles from './notesExplorer.module.css'
 
 const NotesExplorer = ({ className, location }) => {
   const { currentNotebook, notes } = useNotebook()
+  const { isMobile } = useDeviceDetect()
+  const { toggle } = useSider()
+
+  const closeSidebarOnMobile = isMobile ? toggle : undefined
 
   const currentPath = getQueryParam(location, 'path')
 
@@ -39,6 +45,7 @@ const NotesExplorer = ({ className, location }) => {
                 pathname: '/note',
                 search: `?path=${currentNotebook.path}`,
               }}
+              onClick={closeSidebarOnMobile}
             >
               <AddIcon size={16} />
             </Link>
@@ -53,7 +60,10 @@ const NotesExplorer = ({ className, location }) => {
               [styles.selected]: currentPath === item.path,
             })}
           >
-            <Link to={{ pathname: '/note', search: `?path=${item.path}` }}>
+            <Link
+              to={{ pathname: '/note', search: `?path=${item.path}` }}
+              onClick={item.isFile ? closeSidebarOnMobile : undefined}
+            >
               <IconLabel
                 icon={item.isDirectory ? NotebookIcon : NoteIcon}
                 size={16}
