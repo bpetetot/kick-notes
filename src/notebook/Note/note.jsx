@@ -3,7 +3,8 @@ import { withRouter } from 'react-router-dom'
 import cn from 'classnames'
 
 import AddNote from '../Add'
-import { useSync, getNote } from '../../git'
+import { useSync } from '../../services/git'
+import { getNote } from '../service'
 import styles from './note.module.css'
 
 const Note = ({ className, location }) => {

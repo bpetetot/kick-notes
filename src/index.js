@@ -2,9 +2,9 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 
 import { AuthProvider } from './auth'
-import { NetworkProvider } from './helpers/network'
-import * as git from './git'
-import * as firebase from './firebase'
+import { NetworkProvider } from './services/network'
+import * as git from './services/git'
+import * as firebase from './services/firebase'
 import App from './app'
 import './styles/base.css'
 

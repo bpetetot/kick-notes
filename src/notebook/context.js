@@ -1,7 +1,8 @@
 import React, { useEffect, useContext, useState } from 'react'
 import { withRouter } from 'react-router-dom'
 
-import { useSync, getNotebook, listNotes, ROOT_FOLDER } from '../git'
+import { useSync } from '../services/git'
+import { getNotebook, listNotes } from './service'
 
 const NotebookContext = React.createContext()
 
@@ -13,7 +14,7 @@ const NotebookProvider = ({ children, location }) => {
   const { isRepoLoaded } = useSync()
 
   const params = new URLSearchParams(location.search)
-  const path = params.get('path') || ROOT_FOLDER
+  const path = params.get('path')
 
   useEffect(() => {
     if (!isRepoLoaded) return

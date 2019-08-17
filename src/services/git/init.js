@@ -1,20 +1,17 @@
 // Documentation
 // https://isomorphic-git.org/docs/en/browser
-import LightningFS from '@isomorphic-git/lightning-fs'
 import { plugins } from 'isomorphic-git'
 import EventEmitter from 'events'
 
-let fs
-let emitter
+import { lightningFS } from '../fs'
 
-export const getFS = () => fs.promises
+let emitter
 
 export const getEmitter = () => emitter
 
 export const initialize = () => {
   // Initialize isomorphic-git with a file system
-  fs = new LightningFS('fs')
-  plugins.set('fs', fs)
+  plugins.set('fs', lightningFS)
 
   // Initialize isomorphic-git with an event emitter
   emitter = new EventEmitter()

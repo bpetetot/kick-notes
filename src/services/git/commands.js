@@ -1,8 +1,8 @@
 import { clone, pull, utils } from 'isomorphic-git'
 
-import { getRepoUrl, CORS_PROXY, ROOT_FOLDER } from './config'
-import { getFS, getEmitter } from './init'
-import { existsFolder } from './fs'
+import { getRepoUrl, CORS_PROXY } from './config'
+import { getEmitter } from './init'
+import fs, { existsFolder, ROOT_FOLDER } from '../fs'
 
 const getCredentials = user => utils.auth(user.username, user.token)
 
@@ -13,7 +13,7 @@ export const fetchRepo = async (user, onProgress) => {
   if (exists) {
     await pullRepo(user)
   } else {
-    await getFS().mkdir(ROOT_FOLDER)
+    await fs.mkdir(ROOT_FOLDER)
     await cloneRepo(user)
   }
 

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react'
 
-import { fetchRepo } from '../git'
+import { fetchRepo } from './commands'
 
 const SyncContext = React.createContext()
 
