@@ -1,19 +1,23 @@
 import React, { useState, useEffect } from 'react'
 import { withRouter } from 'react-router-dom'
 import cn from 'classnames'
+import debounce from 'lodash/debounce'
 import DeleteIcon from 'react-feather/dist/icons/trash'
 
 import { useSync } from 'services/git'
 import { useSettings } from 'services/settings'
 import { getQueryParam } from 'services/router'
-import { getNote, deleteNote } from 'services/notebook'
+import { getNote, updateNote, deleteNote } from 'services/notebook'
 import MarkdownPreview from 'components/MarkdownPreview'
 
 import AddNote from '../Add'
 import styles from './note.module.css'
 
+const updateNoteDebounced = debounce(updateNote, 5000)
+
 const Note = ({ className, location, history }) => {
   const [note, setNote] = useState()
+  const [content, setContent] = useState(note && note.content)
   const [isSaved, setIsSaved] = useState(true)
   const { isRepoLoaded } = useSync()
 
@@ -25,14 +29,24 @@ const Note = ({ className, location, history }) => {
     getNote(path).then(note => {
       setNote(note)
       setIsSaved(true)
+      if (note) setContent(note.content)
     })
-  }, [isRepoLoaded, path])
+
+    return () => {
+      // save changes when component unmount
+      if (!isSaved) updateNoteDebounced.flush()
+    }
+  }, [isRepoLoaded, path]) // eslint-disable-line
 
   const onEditNote = event => {
     if (isSaved) {
       setIsSaved(false)
     }
-    console.log(event.target.innerText)
+    const content = event.target.value
+    setContent(content)
+    updateNoteDebounced(note, content, () => {
+      setIsSaved(true)
+    })
   }
 
   const onClickDeleteNote = async () => {
@@ -62,14 +76,11 @@ const Note = ({ className, location, history }) => {
             <textarea
               onChange={onEditNote}
               onBlur={onEditNote}
-              defaultValue={note.content}
+              value={content}
               className={styles.editor}
             />
           ) : (
-            <MarkdownPreview
-              className={styles.preview}
-              content={note.content}
-            />
+            <MarkdownPreview className={styles.preview} content={content} />
           )}
         </>
       ) : (

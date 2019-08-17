@@ -8,8 +8,16 @@ export const NetworkProvider = ({ children }) => {
   const [isOnline, setIsOnline] = useState(navigator.onLine)
 
   useEffect(() => {
-    window.addEventListener('online', () => setIsOnline(true))
-    window.addEventListener('offline', () => setIsOnline(false))
+    const setOnline = () => setIsOnline(true)
+    const setOffline = () => setIsOnline(false)
+
+    window.addEventListener('online', setOnline)
+    window.addEventListener('offline', setOffline)
+
+    return () => {
+      window.removeEventListener('online', setOnline)
+      window.removeEventListener('offline', setOffline)
+    }
   }, [])
 
   return (

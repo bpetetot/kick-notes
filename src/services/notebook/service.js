@@ -70,6 +70,14 @@ export const addNote = async parent => {
   return getInfoNote(filepath)
 }
 
+export const updateNote = async (note, content, onUpdate) => {
+  if (!note || note.isNotebook) return
+
+  await fs.writeFile(note.path, content, { encoding: 'utf8' })
+
+  if (onUpdate) onUpdate()
+}
+
 export const deleteNote = async note => {
   if (!note || note.isNotebook) return
 
