@@ -3,8 +3,10 @@ import { withRouter } from 'react-router-dom'
 import cn from 'classnames'
 
 import { useSync } from 'services/git'
+import { useSettings } from 'services/settings'
 import { getQueryParam } from 'services/router'
 import { getNote } from 'services/notebook'
+import MarkdownPreview from 'components/MarkdownPreview'
 
 import AddNote from '../Add'
 import styles from './note.module.css'
@@ -15,6 +17,7 @@ const Note = ({ className, location }) => {
   const { isRepoLoaded } = useSync()
 
   const path = getQueryParam(location, 'path')
+  const { settings } = useSettings()
 
   useEffect(() => {
     if (!isRepoLoaded) return
@@ -39,12 +42,19 @@ const Note = ({ className, location }) => {
             <div>{note.name}</div>
             <div>{isSaved ? 'Saved' : 'Not saved'}</div>
           </div>
-          <textarea
-            className={styles.editor}
-            onChange={onEditNote}
-            onBlur={onEditNote}
-            defaultValue={note.content}
-          />
+          {settings.editorMode ? (
+            <textarea
+              onChange={onEditNote}
+              onBlur={onEditNote}
+              defaultValue={note.content}
+              className={styles.editor}
+            />
+          ) : (
+            <MarkdownPreview
+              className={styles.preview}
+              content={note.content}
+            />
+          )}
         </>
       ) : (
         <AddNote />

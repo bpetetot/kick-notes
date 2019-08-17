@@ -6,6 +6,7 @@ import { useAuth } from 'services/auth'
 import { useNetwork } from 'services/network'
 import { SyncProvider } from 'services/git'
 import { NotebookProvider } from 'services/notebook'
+import { SettingsProvider } from 'services/settings'
 import { useSider } from 'components/Sider'
 
 import Note from './Note'
@@ -21,13 +22,15 @@ const App = () => {
 
   return (
     <SyncProvider user={user} isOnline={isOnline}>
-      <NotebookProvider>
-        <Sidebar className={cn(styles.sidebar, { [styles.open]: isOpen })} />
-        <div className={cn(styles.content, { [styles.open]: !isOpen })}>
-          <Route exact path="/note" component={Note} />
-          <Route exact path="/" component={AddNote} />
-        </div>
-      </NotebookProvider>
+      <SettingsProvider>
+        <NotebookProvider>
+          <Sidebar className={cn(styles.sidebar, { [styles.open]: isOpen })} />
+          <div className={cn(styles.content, { [styles.open]: !isOpen })}>
+            <Route exact path="/note" component={Note} />
+            <Route exact path="/" component={AddNote} />
+          </div>
+        </NotebookProvider>
+      </SettingsProvider>
     </SyncProvider>
   )
 }

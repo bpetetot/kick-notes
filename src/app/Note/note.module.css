@@ -20,16 +20,25 @@
 }
 
 .editor {
-  padding: 1rem;
-  height: calc(100% - var(--infobar-bar-height));
+  height: 100%;
   width: 100%;
   outline: none;
   border: none;
   resize: none;
+  margin: 0;
   font-size: var(--font-size-normal);
+  height: calc(100% - var(--infobar-bar-height));
+  padding: 1rem;
 }
 
 .editor:focus {
   outline: none;
   border: none;
+}
+
+.preview {
+  font-size: var(--font-size-normal);
+  height: calc(100% - var(--infobar-bar-height));
+  padding: 1rem;
+  overflow: scroll;
 }
