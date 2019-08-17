@@ -1,1 +1,1 @@
-export * from './redirectTo'
+export * from './getQueryParam'

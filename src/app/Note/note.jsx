@@ -2,9 +2,10 @@ import React, { useState, useEffect } from 'react'
 import { withRouter } from 'react-router-dom'
 import cn from 'classnames'
 
-import AddNote from '../Add'
 import { useSync } from '../../services/git'
+import { getQueryParam } from '../../services/router'
 import { getNote } from '../service'
+import AddNote from '../Add'
 import styles from './note.module.css'
 
 const Note = ({ className, location }) => {
@@ -12,8 +13,7 @@ const Note = ({ className, location }) => {
   const [isSaved, setIsSaved] = useState(true)
   const { isRepoLoaded } = useSync()
 
-  const params = new URLSearchParams(location.search)
-  const path = params.get('path')
+  const path = getQueryParam(location, 'path')
 
   useEffect(() => {
     if (!isRepoLoaded) return

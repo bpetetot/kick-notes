@@ -8,14 +8,14 @@ import NotebookIcon from 'react-feather/dist/icons/folder'
 import NoteIcon from 'react-feather/dist/icons/file'
 
 import { useNotebook } from '../context'
+import { getQueryParam } from '../../services/router'
 import IconLabel from '../../components/IconLabel'
 import styles from './notesExplorer.module.css'
 
 const NotesExplorer = ({ className, location }) => {
   const { currentNotebook, notes } = useNotebook()
 
-  const params = new URLSearchParams(location.search)
-  const currentPath = params.get('path')
+  const currentPath = getQueryParam(location, 'path')
 
   return (
     <div className={cn(styles.explorer, className)}>
