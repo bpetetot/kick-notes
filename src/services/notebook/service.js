@@ -97,6 +97,23 @@ export const addNote = async parent => {
   return getInfoNote(filepath)
 }
 
+export const rename = async (note, newName, onRename) => {
+  if (!note) return
+
+  let newFilepath
+  if (note.isNote) {
+    newFilepath = `${note.parent}/${newName}.${note.extension}`
+  } else {
+    newFilepath = `${note.parent}/${newName}`
+  }
+
+  await fs.rename(note.path, newFilepath)
+
+  const renamedNote = await getInfoNote(newFilepath)
+
+  if (onRename) onRename(renamedNote)
+}
+
 export const updateNote = async (note, content, onUpdate) => {
   if (!note || note.isNotebook) return
 

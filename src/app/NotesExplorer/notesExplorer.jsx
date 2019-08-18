@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import cn from 'classnames'
 import { Link } from 'react-router-dom'
 import { withRouter } from 'react-router-dom'
@@ -8,7 +8,7 @@ import NotebookIcon from 'react-feather/dist/icons/layers'
 import NoteIcon from 'react-feather/dist/icons/file'
 import DeleteNotebookIcon from 'react-feather/dist/icons/trash'
 
-import { useNotebook, deleteNotebook } from 'services/notebook'
+import { useNotebook, deleteNotebook, rename } from 'services/notebook'
 import { getQueryParam } from 'services/router'
 import { useDeviceDetect } from 'services/device'
 import { useSider } from 'components/Sider'
@@ -18,12 +18,19 @@ import styles from './notesExplorer.module.css'
 
 const NotesExplorer = ({ className, location, history }) => {
   const { currentNotebook, notes } = useNotebook()
+  const [name, setName] = useState()
   const { isMobile } = useDeviceDetect()
   const { toggle } = useSider()
 
   const closeSidebarOnMobile = isMobile ? toggle : undefined
 
   const currentPath = getQueryParam(location, 'path')
+
+  useEffect(() => {
+    if (currentNotebook) {
+      setName(currentNotebook.file)
+    }
+  }, [currentNotebook])
 
   const onClickDeleteNotebook = async () => {
     await deleteNotebook(currentNotebook)
@@ -33,11 +40,35 @@ const NotesExplorer = ({ className, location, history }) => {
     })
   }
 
+  const onChangeName = event => {
+    const newName = event.target.value
+    setName(newName)
+  }
+
+  const onRenameNotebook = async () => {
+    if (name === currentNotebook.file) return
+    await rename(currentNotebook, name, newNotebook => {
+      history.push({
+        pathname: '/note',
+        search: `?path=${newNotebook.path}`,
+      })
+    })
+  }
+
   return (
     <div className={cn(styles.explorer, className)}>
       <div className={styles.infobar}>
         <div className={styles.name}>
-          {currentNotebook && currentNotebook.file}
+          {currentNotebook && currentNotebook.level > 0 ? (
+            <input
+              type="text"
+              value={name || ''}
+              onChange={onChangeName}
+              onBlur={onRenameNotebook}
+            />
+          ) : (
+            <div className={cn(styles.name, styles.root)}>All notebooks</div>
+          )}
         </div>
         <div className={styles.actions}>
           {currentNotebook && currentNotebook.level > 0 && (

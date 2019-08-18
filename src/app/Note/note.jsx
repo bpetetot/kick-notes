@@ -7,7 +7,7 @@ import DeleteIcon from 'react-feather/dist/icons/trash'
 import { useSync } from 'services/git'
 import { useSettings } from 'services/settings'
 import { getQueryParam } from 'services/router'
-import { getNote, updateNote, deleteNote } from 'services/notebook'
+import { getNote, updateNote, deleteNote, rename } from 'services/notebook'
 import MarkdownPreview from 'components/MarkdownPreview'
 
 import AddNote from '../Add'
@@ -17,6 +17,7 @@ const updateNoteDebounced = debounce(updateNote, 5000)
 
 const Note = ({ className, location, history }) => {
   const [note, setNote] = useState()
+  const [name, setName] = useState(note && note.name)
   const [content, setContent] = useState(note && note.content)
   const [isSaved, setIsSaved] = useState(true)
   const { isRepoLoaded } = useSync()
@@ -29,7 +30,10 @@ const Note = ({ className, location, history }) => {
     getNote(path).then(note => {
       setNote(note)
       setIsSaved(true)
-      if (note) setContent(note.content)
+      if (note) {
+        setName(note.name)
+        setContent(note.content)
+      }
     })
 
     return () => {
@@ -39,13 +43,28 @@ const Note = ({ className, location, history }) => {
   }, [isRepoLoaded, path]) // eslint-disable-line
 
   const onEditNote = event => {
-    if (isSaved) {
-      setIsSaved(false)
-    }
+    if (isSaved) setIsSaved(false)
     const content = event.target.value
     setContent(content)
     updateNoteDebounced(note, content, () => {
       setIsSaved(true)
+    })
+  }
+
+  const onChangeName = event => {
+    if (isSaved) setIsSaved(false)
+    const newName = event.target.value
+    setName(newName)
+  }
+
+  const onRenameNote = async () => {
+    if (name === note.name) return
+    await rename(note, name, newNote => {
+      setIsSaved(true)
+      history.push({
+        pathname: '/note',
+        search: `?path=${newNote.path}`,
+      })
     })
   }
 
@@ -62,7 +81,14 @@ const Note = ({ className, location, history }) => {
       {note ? (
         <>
           <div className={styles.infobar}>
-            <div>{note.name}</div>
+            <div className={styles.name}>
+              <input
+                type="text"
+                value={name || ''}
+                onChange={onChangeName}
+                onBlur={onRenameNote}
+              />
+            </div>
             <div className={styles.actions}>
               {!isSaved && <div>Not saved</div>}
               <DeleteIcon
@@ -75,7 +101,6 @@ const Note = ({ className, location, history }) => {
           {settings.editorMode ? (
             <textarea
               onChange={onEditNote}
-              onBlur={onEditNote}
               value={content}
               className={styles.editor}
             />
