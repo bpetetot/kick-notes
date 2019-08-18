@@ -6,8 +6,9 @@ import ArrowUpIcon from 'react-feather/dist/icons/arrow-up'
 import AddIcon from 'react-feather/dist/icons/plus'
 import NotebookIcon from 'react-feather/dist/icons/layers'
 import NoteIcon from 'react-feather/dist/icons/file'
+import DeleteNotebookIcon from 'react-feather/dist/icons/trash'
 
-import { useNotebook } from 'services/notebook'
+import { useNotebook, deleteNotebook } from 'services/notebook'
 import { getQueryParam } from 'services/router'
 import { useDeviceDetect } from 'services/device'
 import { useSider } from 'components/Sider'
@@ -15,7 +16,7 @@ import IconLabel from 'components/IconLabel'
 
 import styles from './notesExplorer.module.css'
 
-const NotesExplorer = ({ className, location }) => {
+const NotesExplorer = ({ className, location, history }) => {
   const { currentNotebook, notes } = useNotebook()
   const { isMobile } = useDeviceDetect()
   const { toggle } = useSider()
@@ -23,6 +24,14 @@ const NotesExplorer = ({ className, location }) => {
   const closeSidebarOnMobile = isMobile ? toggle : undefined
 
   const currentPath = getQueryParam(location, 'path')
+
+  const onClickDeleteNotebook = async () => {
+    await deleteNotebook(currentNotebook)
+    history.push({
+      pathname: '/note',
+      search: `?path=${currentNotebook.parent}`,
+    })
+  }
 
   return (
     <div className={cn(styles.explorer, className)}>
@@ -38,6 +47,13 @@ const NotesExplorer = ({ className, location }) => {
             >
               <ArrowUpIcon size={16} />
             </Link>
+          )}
+          {currentNotebook && currentNotebook.level > 0 && (
+            <DeleteNotebookIcon
+              size={16}
+              className="link"
+              onClick={onClickDeleteNotebook}
+            />
           )}
           {currentNotebook && (
             <Link

@@ -50,11 +50,11 @@ const Note = ({ className, location, history }) => {
   }
 
   const onClickDeleteNote = async () => {
+    await deleteNote(note)
     history.push({
       pathname: '/note',
       search: `?path=${note.parent}`,
     })
-    await deleteNote(note)
   }
 
   return (

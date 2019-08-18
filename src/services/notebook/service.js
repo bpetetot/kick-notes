@@ -105,3 +105,27 @@ export const deleteNote = async note => {
     console.log(error)
   }
 }
+
+/**
+ * Delete notebook and its notes and notebooks recursivly (be carefull)
+ * @param {Object} notebook
+ */
+export const deleteNotebook = async notebook => {
+  if (!notebook || !notebook.isNotebook) return
+
+  const filenames = await fs.readdir(notebook.path)
+
+  if (filenames.length > 0) {
+    await Promise.all(
+      filenames.map(async file => {
+        const fileInfo = await getInfoNote(`${notebook.path}/${file}`)
+        if (fileInfo.isNote) {
+          await deleteNote(fileInfo)
+        } else {
+          await deleteNotebook(fileInfo)
+        }
+      })
+    )
+  }
+  await fs.rmdir(notebook.path)
+}
