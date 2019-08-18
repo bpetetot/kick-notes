@@ -37,7 +37,7 @@ export const generateFoldername = async (path, folder, increment = 0) => {
   }
   const stats = await stat(filepath)
   if (stats) {
-    return generateFilename(path, folder, increment + 1)
+    return generateFoldername(path, folder, increment + 1)
   }
   return filepath
 }

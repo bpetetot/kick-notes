@@ -36,7 +36,9 @@ const NotesExplorer = ({ className, location, history }) => {
   return (
     <div className={cn(styles.explorer, className)}>
       <div className={styles.infobar}>
-        <div>{currentNotebook && currentNotebook.file}</div>
+        <div className={styles.name}>
+          {currentNotebook && currentNotebook.file}
+        </div>
         <div className={styles.actions}>
           {currentNotebook && currentNotebook.level > 0 && (
             <Link

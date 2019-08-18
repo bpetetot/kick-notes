@@ -43,9 +43,18 @@ export const listNotes = async filepath => {
     filenames.map(async file => getInfoNote(`${filepath}/${file}`))
   )
 
-  return filesinfo.filter(
-    file => (file.isNotebook && !file.isHidden) || file.extension === 'md'
-  )
+  return filesinfo
+    .filter(
+      file => (file.isNotebook && !file.isHidden) || file.extension === 'md'
+    )
+    .sort((file1, file2) => {
+      if (file1.isNotebook && file2.isNote) {
+        return -1
+      } else if (file1.isNote && file2.isNotebook) {
+        return 1
+      }
+      return file1.name.localeCompare(file2.name)
+    })
 }
 
 export const getNote = async filepath => {
