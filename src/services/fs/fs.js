@@ -29,3 +29,15 @@ export const generateFilename = async (path, filename, increment = 0) => {
   }
   return filepath
 }
+
+export const generateFoldername = async (path, folder, increment = 0) => {
+  let filepath = `${path}/${folder}`
+  if (increment > 0) {
+    filepath = `${path}/${folder} ${increment}`
+  }
+  const stats = await stat(filepath)
+  if (stats) {
+    return generateFilename(path, folder, increment + 1)
+  }
+  return filepath
+}

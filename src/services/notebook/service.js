@@ -1,7 +1,13 @@
-import fs, { stat, generateFilename, ROOT_FOLDER } from '../fs'
+import fs, {
+  stat,
+  generateFilename,
+  generateFoldername,
+  ROOT_FOLDER,
+} from '../fs'
 import first from 'lodash/first'
 import last from 'lodash/last'
 
+const DEFAULT_NOTEBOOK_NAME = 'New notebook'
 const DEFAULT_NOTE_NAME = 'New note.md'
 
 const DEFAULT_NOTEBOOK = {
@@ -59,6 +65,18 @@ export const getNotebook = async filepath => {
   if (info.isNotebook) return info
 
   return getInfoNote(info.parent)
+}
+
+export const addNotebook = async parent => {
+  if (!parent || !parent.isNotebook) return
+
+  const folderpath = await generateFoldername(
+    parent.path,
+    DEFAULT_NOTEBOOK_NAME
+  )
+  await fs.mkdir(folderpath)
+
+  return getInfoNote(folderpath)
 }
 
 export const addNote = async parent => {

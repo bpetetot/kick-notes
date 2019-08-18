@@ -20,9 +20,9 @@ const Note = ({ className, location, history }) => {
   const [content, setContent] = useState(note && note.content)
   const [isSaved, setIsSaved] = useState(true)
   const { isRepoLoaded } = useSync()
+  const { settings } = useSettings()
 
   const path = getQueryParam(location, 'path')
-  const { settings } = useSettings()
 
   useEffect(() => {
     if (!isRepoLoaded) return
