@@ -1,5 +1,12 @@
 import fs from './index'
 
+export const isValidFilename = filename => {
+  if (!filename || filename.length > 255) {
+    return false
+  }
+  return /^[a-z0-9_.@()-\s]+$/i.test(filename)
+}
+
 export const stat = async filepath => {
   if (!filepath) return
   try {

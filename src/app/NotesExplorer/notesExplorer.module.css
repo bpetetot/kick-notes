@@ -25,18 +25,6 @@
   text-overflow: ellipsis;
 }
 
-.name > input {
-  margin: 0;
-  border: none;
-  font-size: var(--font-size-small);
-  font-weight: var(--font-regular);
-  width: 100%;
-  height: 39px;
-  border-radius: 0;
-  border: 1px solid transparent;
-  text-overflow: ellipsis;
-}
-
 .actions > * {
   margin-left: 1rem;
 }

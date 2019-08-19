@@ -1,12 +1,17 @@
 import React, { useState, useRef, useEffect } from 'react'
+import cn from 'classnames'
 
 import { useRouter } from 'services/router'
 import { rename } from 'services/notebook'
+import { isValidFilename } from 'services/fs'
+
+import styles from './noteNameInput.module.css'
 
 const NoteNameInput = ({ note, onChange, className }) => {
   const { isNew } = useRouter()
 
   const [name, setName] = useState(note.name)
+  const [error, setError] = useState()
   const inputEl = useRef()
 
   useEffect(() => {
@@ -23,22 +28,35 @@ const NoteNameInput = ({ note, onChange, className }) => {
   const onChangeName = event => {
     const newName = event.target.value
     setName(newName)
+    setError(!isValidFilename(newName))
   }
 
   const onRenameNote = async () => {
     if (name === note.name) return
-    await rename(note, name, onChange)
+    if (isValidFilename(name)) {
+      await rename(note, name, onChange)
+    } else {
+      setName(note.name)
+      setError(false)
+    }
+  }
+
+  const onKeyPress = event => {
+    if (event.key === 'Enter') {
+      onRenameNote()
+    }
   }
 
   return (
     <input
-      className={className}
+      className={cn(className, styles.input, { [styles.error]: error })}
       ref={inputEl}
       type="text"
       value={name || ''}
       onFocus={onFocusName}
       onChange={onChangeName}
       onBlur={onRenameNote}
+      onKeyPress={onKeyPress}
       autoFocus={isNew}
     />
   )
