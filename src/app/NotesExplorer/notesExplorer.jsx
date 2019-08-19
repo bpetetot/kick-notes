@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import cn from 'classnames'
 import { Link } from 'react-router-dom'
-import { withRouter } from 'react-router-dom'
 import ArrowUpIcon from 'react-feather/dist/icons/arrow-up'
 import AddIcon from 'react-feather/dist/icons/plus'
 import NotebookIcon from 'react-feather/dist/icons/layers'
@@ -9,22 +8,20 @@ import NoteIcon from 'react-feather/dist/icons/file'
 import DeleteNotebookIcon from 'react-feather/dist/icons/trash'
 
 import { useNotebook, deleteNotebook, rename } from 'services/notebook'
-import { getQueryParam } from 'services/router'
+import { useRouter } from 'services/router'
 import { useDeviceDetect } from 'services/device'
 import { useSider } from 'components/Sider'
 import IconLabel from 'components/IconLabel'
 
 import styles from './notesExplorer.module.css'
 
-const NotesExplorer = ({ className, location, history }) => {
-  const { currentNotebook, notes } = useNotebook()
-  const [name, setName] = useState()
+const NotesExplorer = ({ className }) => {
   const { isMobile } = useDeviceDetect()
   const { toggle } = useSider()
+  const { currentNotebook, notes } = useNotebook()
+  const { notePath, openNoteRoute, buildNoteRoute } = useRouter()
 
-  const closeSidebarOnMobile = isMobile ? toggle : undefined
-
-  const currentPath = getQueryParam(location, 'path')
+  const [name, setName] = useState()
 
   useEffect(() => {
     if (currentNotebook) {
@@ -34,10 +31,7 @@ const NotesExplorer = ({ className, location, history }) => {
 
   const onClickDeleteNotebook = async () => {
     await deleteNotebook(currentNotebook)
-    history.push({
-      pathname: '/note',
-      search: `?path=${currentNotebook.parent}`,
-    })
+    openNoteRoute({ notebook: currentNotebook.parent })
   }
 
   const onChangeName = event => {
@@ -48,10 +42,7 @@ const NotesExplorer = ({ className, location, history }) => {
   const onRenameNotebook = async () => {
     if (name === currentNotebook.file) return
     await rename(currentNotebook, name, newNotebook => {
-      history.push({
-        pathname: '/note',
-        search: `?path=${newNotebook.path}`,
-      })
+      openNoteRoute({ notebook: newNotebook.path })
     })
   }
 
@@ -72,12 +63,7 @@ const NotesExplorer = ({ className, location, history }) => {
         </div>
         <div className={styles.actions}>
           {currentNotebook && currentNotebook.level > 0 && (
-            <Link
-              to={{
-                pathname: '/note',
-                search: `?path=${currentNotebook.parent}`,
-              }}
-            >
+            <Link to={buildNoteRoute({ notebook: currentNotebook.parent })}>
               <ArrowUpIcon size={16} />
             </Link>
           )}
@@ -90,11 +76,8 @@ const NotesExplorer = ({ className, location, history }) => {
           )}
           {currentNotebook && (
             <Link
-              to={{
-                pathname: '/note',
-                search: `?path=${currentNotebook.path}`,
-              }}
-              onClick={closeSidebarOnMobile}
+              to={buildNoteRoute({ notebook: currentNotebook.path })}
+              onClick={isMobile ? toggle : undefined}
             >
               <AddIcon size={16} />
             </Link>
@@ -106,12 +89,15 @@ const NotesExplorer = ({ className, location, history }) => {
           <li
             key={item.file}
             className={cn(styles.item, {
-              [styles.selected]: currentPath === item.path,
+              [styles.selected]: notePath === item.path,
             })}
           >
             <Link
-              to={{ pathname: '/note', search: `?path=${item.path}` }}
-              onClick={item.isNote ? closeSidebarOnMobile : undefined}
+              to={buildNoteRoute({
+                note: item.isNote ? item.path : undefined,
+                notebook: item.isNotebook ? item.path : item.parent,
+              })}
+              onClick={item.isNote && isMobile ? toggle : undefined}
             >
               <IconLabel
                 icon={item.isNotebook ? NotebookIcon : NoteIcon}
@@ -127,4 +113,4 @@ const NotesExplorer = ({ className, location, history }) => {
   )
 }
 
-export default withRouter(NotesExplorer)
+export default NotesExplorer

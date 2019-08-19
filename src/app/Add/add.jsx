@@ -1,27 +1,22 @@
 import React from 'react'
-import { withRouter } from 'react-router-dom'
 
 import { useNotebook, addNote, addNotebook } from 'services/notebook'
+import { useRouter } from 'services/router'
 
 import styles from './add.module.css'
 
-const AddNote = ({ history }) => {
+const AddNote = () => {
   const { currentNotebook } = useNotebook()
+  const { openNoteRoute } = useRouter()
 
   const onClickAddNote = async () => {
     const newNote = await addNote(currentNotebook)
-    history.push({
-      pathname: '/note',
-      search: `?path=${newNote.path}`,
-    })
+    openNoteRoute({ notebook: newNote.parent, note: newNote.path })
   }
 
   const onClickAddNotebook = async () => {
     const newNotebook = await addNotebook(currentNotebook)
-    history.push({
-      pathname: '/note',
-      search: `?path=${newNotebook.path}`,
-    })
+    openNoteRoute({ notebook: newNotebook.path })
   }
 
   return (
@@ -34,4 +29,4 @@ const AddNote = ({ history }) => {
   )
 }
 
-export default withRouter(AddNote)
+export default AddNote
