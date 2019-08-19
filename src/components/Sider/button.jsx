@@ -7,10 +7,15 @@ import { useSider } from './context'
 const SiderButton = () => {
   const { isOpen, toggle } = useSider()
 
-  if (isOpen) {
-    return <ArrowLeftIcon onClick={toggle} style={{ cursor: 'pointer' }} />
-  }
-  return <MenuIcon onClick={toggle} style={{ cursor: 'pointer' }} />
+  return (
+    <button onClick={toggle} className="link">
+      {isOpen ? (
+        <ArrowLeftIcon onClick={toggle} />
+      ) : (
+        <MenuIcon onClick={toggle} />
+      )}
+    </button>
+  )
 }
 
 export default SiderButton

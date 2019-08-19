@@ -12,9 +12,12 @@
   align-items: center;
 }
 
+.siderButton {
+  margin-right: 1rem;
+}
+
 .title {
   font-weight: var(--font-bold);
-  margin-left: 2rem;
 }
 
 .nav {
