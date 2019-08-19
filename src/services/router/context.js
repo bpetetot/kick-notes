@@ -10,16 +10,17 @@ export const useRouter = () => useContext(RouterContext)
 const RouterProvider = ({ children, location, history }) => {
   const notebookPath = getQueryParam(location, 'notebook')
   const notePath = getQueryParam(location, 'note')
+  const isNew = Boolean(getQueryParam(location, 'new'))
 
-  const buildNoteRoute = ({ note, notebook }) => {
+  const buildNoteRoute = params => {
     return {
       pathname: '/note',
-      search: buildQueryString({ notebook, note }),
+      search: buildQueryString(params),
     }
   }
 
-  const openNoteRoute = ({ note, notebook }) => {
-    history.push(buildNoteRoute({ note, notebook }))
+  const openNoteRoute = params => {
+    history.push(buildNoteRoute(params))
   }
 
   return (
@@ -27,6 +28,7 @@ const RouterProvider = ({ children, location, history }) => {
       value={{
         notebookPath,
         notePath,
+        isNew,
         buildNoteRoute,
         openNoteRoute,
       }}

@@ -7,7 +7,8 @@ import { useNotebook } from 'services/notebook'
 import { useRouter } from 'services/router'
 import { useSync } from 'services/git'
 import { useSettings } from 'services/settings'
-import { updateNote, deleteNote, rename } from 'services/notebook'
+import { updateNote, deleteNote } from 'services/notebook'
+import NoteNameInput from 'components/NoteNameInput'
 import MarkdownPreview from 'components/MarkdownPreview'
 
 import AddNote from '../Add'
@@ -21,7 +22,6 @@ const Note = ({ className }) => {
   const { settings } = useSettings()
   const { openNoteRoute } = useRouter()
 
-  const [name, setName] = useState()
   const [content, setContent] = useState()
   const [isSaved, setIsSaved] = useState(true)
 
@@ -29,7 +29,6 @@ const Note = ({ className }) => {
     if (!isRepoLoaded) return
 
     if (currentNote) {
-      setName(currentNote.name)
       setContent(currentNote.content)
     }
 
@@ -48,18 +47,8 @@ const Note = ({ className }) => {
     })
   }
 
-  const onChangeName = event => {
-    if (isSaved) setIsSaved(false)
-    const newName = event.target.value
-    setName(newName)
-  }
-
-  const onRenameNote = async () => {
-    if (name === currentNote.name) return
-    await rename(currentNote, name, renamed => {
-      setIsSaved(true)
-      openNoteRoute({ note: renamed.path, notebook: renamed.parent })
-    })
+  const onRenameNote = renamed => {
+    openNoteRoute({ note: renamed.path, notebook: renamed.parent })
   }
 
   const onClickDeleteNote = async () => {
@@ -73,12 +62,7 @@ const Note = ({ className }) => {
         <>
           <div className={styles.infobar}>
             <div className={styles.name}>
-              <input
-                type="text"
-                value={name || ''}
-                onChange={onChangeName}
-                onBlur={onRenameNote}
-              />
+              <NoteNameInput note={currentNote} onChange={onRenameNote} />
             </div>
             <div className={styles.actions}>
               {!isSaved && <div>Not saved</div>}

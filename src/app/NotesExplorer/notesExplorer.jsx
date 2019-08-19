@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import cn from 'classnames'
 import { Link } from 'react-router-dom'
 import ArrowUpIcon from 'react-feather/dist/icons/arrow-up'
@@ -7,11 +7,12 @@ import NotebookIcon from 'react-feather/dist/icons/layers'
 import NoteIcon from 'react-feather/dist/icons/file'
 import DeleteNotebookIcon from 'react-feather/dist/icons/trash'
 
-import { useNotebook, deleteNotebook, rename } from 'services/notebook'
+import { useNotebook, deleteNotebook } from 'services/notebook'
 import { useRouter } from 'services/router'
 import { useDeviceDetect } from 'services/device'
 import { useSider } from 'components/Sider'
 import IconLabel from 'components/IconLabel'
+import NoteNameInput from 'components/NoteNameInput'
 
 import styles from './notesExplorer.module.css'
 
@@ -21,29 +22,13 @@ const NotesExplorer = ({ className }) => {
   const { currentNotebook, notes } = useNotebook()
   const { notePath, openNoteRoute, buildNoteRoute } = useRouter()
 
-  const [name, setName] = useState()
-
-  useEffect(() => {
-    if (currentNotebook) {
-      setName(currentNotebook.file)
-    }
-  }, [currentNotebook])
-
   const onClickDeleteNotebook = async () => {
     await deleteNotebook(currentNotebook)
     openNoteRoute({ notebook: currentNotebook.parent })
   }
 
-  const onChangeName = event => {
-    const newName = event.target.value
-    setName(newName)
-  }
-
-  const onRenameNotebook = async () => {
-    if (name === currentNotebook.file) return
-    await rename(currentNotebook, name, newNotebook => {
-      openNoteRoute({ notebook: newNotebook.path })
-    })
+  const onRenameNotebook = async newNotebook => {
+    openNoteRoute({ notebook: newNotebook.path })
   }
 
   return (
@@ -51,12 +36,7 @@ const NotesExplorer = ({ className }) => {
       <div className={styles.infobar}>
         <div className={styles.name}>
           {currentNotebook && currentNotebook.level > 0 ? (
-            <input
-              type="text"
-              value={name || ''}
-              onChange={onChangeName}
-              onBlur={onRenameNotebook}
-            />
+            <NoteNameInput note={currentNotebook} onChange={onRenameNotebook} />
           ) : (
             <div className={cn(styles.name, styles.root)}>All notebooks</div>
           )}

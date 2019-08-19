@@ -11,12 +11,12 @@ const AddNote = () => {
 
   const onClickAddNote = async () => {
     const newNote = await addNote(currentNotebook)
-    openNoteRoute({ notebook: newNote.parent, note: newNote.path })
+    openNoteRoute({ notebook: newNote.parent, note: newNote.path, new: true })
   }
 
   const onClickAddNotebook = async () => {
     const newNotebook = await addNotebook(currentNotebook)
-    openNoteRoute({ notebook: newNotebook.path })
+    openNoteRoute({ notebook: newNotebook.path, new: true })
   }
 
   return (
