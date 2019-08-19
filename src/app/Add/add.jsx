@@ -2,6 +2,7 @@ import React from 'react'
 
 import { useNotebook, addNote, addNotebook } from 'services/notebook'
 import { useRouter } from 'services/router'
+import Loading from 'components/Loading'
 
 import styles from './add.module.css'
 
@@ -19,8 +20,13 @@ const AddNote = () => {
     openNoteRoute({ notebook: newNotebook.path, new: true })
   }
 
+  if (!currentNotebook) {
+    return <Loading />
+  }
+
   return (
     <div className={styles.addNote}>
+      <h2>{currentNotebook.name}</h2>
       <button className="button-primary" onClick={onClickAddNote}>
         New note
       </button>

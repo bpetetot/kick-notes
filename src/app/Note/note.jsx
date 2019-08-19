@@ -10,6 +10,7 @@ import { useRouter } from 'services/router'
 import { useSync } from 'services/git'
 import { useSettings } from 'services/settings'
 import { updateNote, deleteNote } from 'services/notebook'
+import { useDeviceDetect } from 'services/device'
 import NoteNameInput from 'components/NoteNameInput'
 import MarkdownPreview from 'components/MarkdownPreview'
 import { useSider } from 'components/Sider/context'
@@ -25,6 +26,7 @@ const Note = ({ className }) => {
   const { settings } = useSettings()
   const { openNoteRoute } = useRouter()
   const { isOpen, toggle } = useSider()
+  const { isMobile } = useDeviceDetect()
 
   const [content, setContent] = useState()
   const [isSaved, setIsSaved] = useState(true)
@@ -62,39 +64,39 @@ const Note = ({ className }) => {
 
   return (
     <div className={cn(styles.note, className)}>
-      {currentNote ? (
-        <>
-          <div className={styles.infobar}>
-            <div className={styles.name}>
-              <NoteNameInput note={currentNote} onChange={onRenameNote} />
-            </div>
-            <div className={styles.actions}>
+      <div className={styles.infobar}>
+        <div className={styles.name}>
+          {currentNote && (
+            <NoteNameInput note={currentNote} onChange={onRenameNote} />
+          )}
+        </div>
+        <div className={styles.actions}>
+          {currentNote && (
+            <>
               {!isSaved && <div>Not saved</div>}
               <button onClick={onClickDeleteNote} className="link">
                 <DeleteIcon size={16} />
               </button>
-              <button onClick={toggle} className="link">
-                {isOpen ? (
-                  <MaximizeIcon size={16} />
-                ) : (
-                  <MinimizeIcon size={16} />
-                )}
-              </button>
-            </div>
-          </div>
-          {settings.editorMode ? (
-            <textarea
-              onChange={onEditNote}
-              value={content}
-              className={styles.editor}
-            />
-          ) : (
-            <MarkdownPreview className={styles.preview} content={content} />
+            </>
           )}
-        </>
-      ) : (
-        <AddNote />
+          {!isMobile && (
+            <button onClick={toggle} className="link">
+              {isOpen ? <MaximizeIcon size={16} /> : <MinimizeIcon size={16} />}
+            </button>
+          )}
+        </div>
+      </div>
+      {currentNote && settings.editorMode && (
+        <textarea
+          onChange={onEditNote}
+          value={content}
+          className={styles.editor}
+        />
       )}
+      {currentNote && !settings.editorMode && (
+        <MarkdownPreview className={styles.preview} content={content} />
+      )}
+      {!currentNote && <AddNote />}
     </div>
   )
 }
