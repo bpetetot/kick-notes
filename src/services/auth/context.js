@@ -1,7 +1,8 @@
 import firebase from 'firebase/app'
 
 import React, { useState, useEffect, useContext } from 'react'
-import { useStorage } from '../storage'
+import { useStorage } from 'services/storage'
+import { useNetwork } from 'services/network'
 
 const AuthContext = React.createContext()
 
@@ -12,6 +13,7 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState()
   const [loading, setLoading] = useState(true)
   const [token, setToken] = useStorage('token')
+  const { isOnline } = useNetwork()
 
   useEffect(() => {
     firebase.auth().onAuthStateChanged(async user => {
@@ -23,8 +25,9 @@ export const AuthProvider = ({ children }) => {
         }
 
         // Call GitHub API to get user info
+        let username
         const accessToken = (credential && credential.accessToken) || token
-        if (accessToken) {
+        if (accessToken && isOnline) {
           const resp = await fetch('https://api.github.com/user', {
             method: 'GET',
             headers: {
@@ -33,14 +36,17 @@ export const AuthProvider = ({ children }) => {
             },
           })
           const data = await resp.json()
-          setUser({
-            uid: user.uid,
-            displayName: data.name,
-            username: data.login,
-            token: accessToken,
-          })
-          setIsAuthenticated(true)
+          username = data.login
         }
+
+        setUser({
+          uid: user.uid,
+          displayName: user.displayName,
+          email: user.email,
+          username,
+          token: accessToken,
+        })
+        setIsAuthenticated(true)
       } else {
         setToken(null)
         setUser(null)

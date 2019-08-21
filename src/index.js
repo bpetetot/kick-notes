@@ -13,11 +13,11 @@ firebase.initialize()
 git.initialize()
 
 ReactDOM.render(
-  <AuthProvider>
-    <NetworkProvider>
+  <NetworkProvider>
+    <AuthProvider>
       <Layout />
-    </NetworkProvider>
-  </AuthProvider>,
+    </AuthProvider>
+  </NetworkProvider>,
   document.getElementById('root')
 )
 

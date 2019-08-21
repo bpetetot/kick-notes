@@ -11,6 +11,7 @@ import { useNotebook, deleteNotebook } from 'services/notebook'
 import { useRouter } from 'services/router'
 import { useDeviceDetect } from 'services/device'
 import { useSider } from 'components/Sider'
+import { useGit } from 'services/git'
 import IconLabel from 'components/IconLabel'
 import NoteNameInput from 'components/NoteNameInput'
 
@@ -21,10 +22,12 @@ const NotesExplorer = ({ className }) => {
   const { toggle } = useSider()
   const { currentNotebook, notes } = useNotebook()
   const { notePath, openNoteRoute, buildNoteRoute } = useRouter()
+  const { commitAndPush } = useGit()
 
   const onClickDeleteNotebook = async () => {
     await deleteNotebook(currentNotebook)
     openNoteRoute({ notebook: currentNotebook.parent })
+    commitAndPush(`Delete notebook ${currentNotebook.name}`)
   }
 
   const onRenameNotebook = async newNotebook => {

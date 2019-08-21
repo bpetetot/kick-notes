@@ -4,7 +4,7 @@ import { Route } from 'react-router-dom'
 
 import { useAuth } from 'services/auth'
 import { useNetwork } from 'services/network'
-import { SyncProvider } from 'services/git'
+import { GitProvider } from 'services/git'
 import { NotebookProvider } from 'services/notebook'
 import { SettingsProvider } from 'services/settings'
 import { useSider } from 'components/Sider'
@@ -21,7 +21,7 @@ const App = () => {
   const { isOpen } = useSider()
 
   return (
-    <SyncProvider user={user} isOnline={isOnline}>
+    <GitProvider user={user} isOnline={isOnline}>
       <SettingsProvider>
         <NotebookProvider>
           <Sidebar className={cn(styles.sidebar, { [styles.open]: isOpen })} />
@@ -31,7 +31,7 @@ const App = () => {
           </div>
         </NotebookProvider>
       </SettingsProvider>
-    </SyncProvider>
+    </GitProvider>
   )
 }
 

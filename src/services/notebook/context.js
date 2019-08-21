@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react'
 
 import { getNotebook, getNote, listNotes } from 'services/notebook'
-import { useSync } from 'services/git'
+import { useGit } from 'services/git'
 import { useRouter } from 'services/router'
 
 const NotebookContext = React.createContext()
@@ -12,7 +12,7 @@ const NotebookProvider = ({ children }) => {
   const [currentNotebook, setCurrentNotebook] = useState()
   const [currentNote, setCurrentNote] = useState()
   const [notes, setNotes] = useState([])
-  const { isRepoLoaded } = useSync()
+  const { isRepoLoaded } = useGit()
   const { notebookPath, notePath } = useRouter()
 
   useEffect(() => {

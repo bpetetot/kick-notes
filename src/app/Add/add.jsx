@@ -2,6 +2,7 @@ import React from 'react'
 
 import { useNotebook, addNote, addNotebook } from 'services/notebook'
 import { useRouter } from 'services/router'
+import { useGit } from 'services/git'
 import Loading from 'components/Loading'
 
 import styles from './add.module.css'
@@ -9,10 +10,12 @@ import styles from './add.module.css'
 const AddNote = () => {
   const { currentNotebook } = useNotebook()
   const { openNoteRoute } = useRouter()
+  const { commitAndPush } = useGit()
 
   const onClickAddNote = async () => {
     const newNote = await addNote(currentNotebook)
     openNoteRoute({ notebook: newNote.parent, note: newNote.path, new: true })
+    commitAndPush('Add new note')
   }
 
   const onClickAddNotebook = async () => {

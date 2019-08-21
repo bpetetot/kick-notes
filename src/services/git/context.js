@@ -1,28 +1,60 @@
 import React, { useState, useEffect, useContext } from 'react'
 
-import { fetchRepo } from './service'
+import { useStorage } from 'services/storage'
 
-const SyncContext = React.createContext()
+import { cloneOrPull, pull, commit, push } from './service'
 
-export const useSync = () => useContext(SyncContext)
+const PULL_DELAY = 60000
 
-export const SyncProvider = ({ children, user, isOnline }) => {
+const GitContext = React.createContext()
+
+export const useGit = () => useContext(GitContext)
+
+export const GitProvider = ({ children, user, isOnline }) => {
   const [isRepoLoaded, setIsRepoLoaded] = useState(false)
+  const [isSync, setIsSync] = useStorage('isSync')
 
   useEffect(() => {
     if (!user) return
+
     const load = async () => {
-      if (isOnline) {
-        await fetchRepo(user, console.log)
+      if (!isRepoLoaded && isOnline) {
+        // clone or pull the repo
+        await cloneOrPull(user)
+        setIsRepoLoaded(true)
+
+        // Push to the repo if needed
+        if (/false/i.test(isSync) && isOnline) {
+          console.log('Need to be synchronized.')
+          await push(user, true)
+          setIsSync(true)
+        } else {
+          console.log('Already synchronized.')
+        }
       }
-      setIsRepoLoaded(true)
     }
     load()
-  }, [user, isOnline]) // eslint-disable-line
+
+    const pullInterval = setInterval(() => {
+      if (isOnline) pull(user)
+    }, PULL_DELAY)
+
+    return () => clearInterval(pullInterval)
+  }, [user, isOnline, isSync, isRepoLoaded]) // eslint-disable-line
+
+  const commitAndPush = async messsage => {
+    await commit(messsage)
+    if (isOnline) {
+      await push(user)
+    } else {
+      console.log('not sync')
+      setIsSync(false)
+    }
+  }
 
   return (
-    <SyncContext.Provider value={{ isRepoLoaded }}>
+    <GitContext.Provider value={{ isRepoLoaded, commitAndPush }}>
       {children}
-    </SyncContext.Provider>
+    </GitContext.Provider>
   )
 }

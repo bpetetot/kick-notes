@@ -1,11 +1,11 @@
+import first from 'lodash/first'
+import last from 'lodash/last'
 import fs, {
   stat,
   generateFilename,
   generateFoldername,
   ROOT_FOLDER,
 } from '../fs'
-import first from 'lodash/first'
-import last from 'lodash/last'
 
 const DEFAULT_NOTEBOOK_NAME = 'New notebook'
 const DEFAULT_NOTE_NAME = 'New note.md'

@@ -4,11 +4,13 @@ import cn from 'classnames'
 import { useRouter } from 'services/router'
 import { rename } from 'services/notebook'
 import { isValidFilename } from 'services/fs'
+import { useGit } from 'services/git'
 
 import styles from './noteNameInput.module.css'
 
 const NoteNameInput = ({ note, onChange, className }) => {
   const { isNew } = useRouter()
+  const { commitAndPush } = useGit()
 
   const [name, setName] = useState(note.name)
   const [error, setError] = useState()
@@ -35,6 +37,7 @@ const NoteNameInput = ({ note, onChange, className }) => {
     if (name === note.name) return
     if (isValidFilename(name)) {
       await rename(note, name, onChange)
+      commitAndPush(`Rename "${note.name}" to "${name}"`)
     } else {
       setName(note.name)
       setError(false)

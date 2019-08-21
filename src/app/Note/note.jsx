@@ -7,7 +7,7 @@ import MinimizeIcon from 'react-feather/dist/icons/minimize-2'
 
 import { useNotebook } from 'services/notebook'
 import { useRouter } from 'services/router'
-import { useSync } from 'services/git'
+import { useGit } from 'services/git'
 import { useSettings } from 'services/settings'
 import { updateNote, deleteNote } from 'services/notebook'
 import { useDeviceDetect } from 'services/device'
@@ -22,11 +22,11 @@ const updateNoteDebounced = debounce(updateNote, 5000)
 
 const Note = ({ className }) => {
   const { currentNote } = useNotebook()
-  const { isRepoLoaded } = useSync()
   const { settings } = useSettings()
   const { openNoteRoute } = useRouter()
   const { isOpen, toggle } = useSider()
   const { isMobile } = useDeviceDetect()
+  const { isRepoLoaded, commitAndPush } = useGit()
 
   const [content, setContent] = useState()
   const [isSaved, setIsSaved] = useState(true)
@@ -35,6 +35,7 @@ const Note = ({ className }) => {
     if (!isRepoLoaded) return
 
     if (currentNote) {
+      if (!isSaved) updateNoteDebounced.flush()
       setContent(currentNote.content)
     }
 
@@ -46,10 +47,14 @@ const Note = ({ className }) => {
 
   const onEditNote = event => {
     if (isSaved) setIsSaved(false)
-    const content = event.target.value
-    setContent(content)
-    updateNoteDebounced(currentNote, content, () => {
+
+    const newContent = event.target.value
+    if (content === newContent) return
+
+    setContent(newContent)
+    updateNoteDebounced(currentNote, newContent, () => {
       setIsSaved(true)
+      commitAndPush(`Save note "${currentNote.name}"`)
     })
   }
 
@@ -60,6 +65,7 @@ const Note = ({ className }) => {
   const onClickDeleteNote = async () => {
     await deleteNote(currentNote)
     openNoteRoute({ notebook: currentNote.parent })
+    commitAndPush(`Delete note "${currentNote.name}"`)
   }
 
   return (
@@ -88,8 +94,9 @@ const Note = ({ className }) => {
       </div>
       {currentNote && settings.editorMode && (
         <textarea
-          onChange={onEditNote}
           value={content}
+          onChange={onEditNote}
+          onBlur={onEditNote}
           className={styles.editor}
         />
       )}
