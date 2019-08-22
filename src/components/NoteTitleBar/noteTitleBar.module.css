@@ -3,6 +3,39 @@
   width: 100%;
 }
 
+.infobar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 2rem;
+  height: calc(--infobar-bar-height);
+}
+
+.name {
+  flex-grow: 1;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.name > h1 {
+  margin: 0;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+}
+
+.actions > * {
+  margin-left: 2rem;
+}
+
+.wrapper {
+  height: 100%;
+  width: 100%;
+}
+
 .editor {
   height: 100%;
   width: 100%;

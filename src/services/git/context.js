@@ -26,8 +26,8 @@ export const GitProvider = ({ children, user, isOnline }) => {
         // Push to the repo if needed
         if (/false/i.test(isSync) && isOnline) {
           console.log('Need to be synchronized.')
-          await push(user, true)
           setIsSync(true)
+          push(user, true)
         } else {
           console.log('Already synchronized.')
         }

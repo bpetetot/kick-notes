@@ -37,7 +37,7 @@ export const cloneOrPull = async user => {
       value: user.email,
     })
   } else {
-    await pull(user)
+    pull(user)
   }
 }
 

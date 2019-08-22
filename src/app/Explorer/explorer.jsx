@@ -16,14 +16,14 @@ const NotesExplorer = ({ className }) => {
   const { isMobile } = useDeviceDetect()
   const { toggle } = useSider()
   const { notes } = useNotebook()
-  const { path, buildNoteRoute } = useRouter()
+  const { path, toNote } = useRouter()
 
   return (
     <ul className={cn(styles.explorer, className)}>
       {notes.map(item => (
         <Link
           key={item.file}
-          to={buildNoteRoute({ path: item.path })}
+          to={toNote(item)}
           onClick={item.isNote && isMobile ? toggle : undefined}
         >
           <li

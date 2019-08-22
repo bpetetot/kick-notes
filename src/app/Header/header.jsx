@@ -18,19 +18,19 @@ import styles from './header.module.css'
 const Header = ({ className }) => {
   const { isMobile } = useDeviceDetect()
   const { currentNote, currentNotebook } = useNotebook()
-  const { openNoteRoute, buildNoteRoute } = useRouter()
-  const { toggle } = useSider()
+  const { goToNote, toNote } = useRouter()
+  const { open, close } = useSider()
   const { commitAndPush } = useGit()
 
   const onClickDeleteNote = async () => {
     await deleteNote(currentNote)
-    openNoteRoute({ path: currentNote.parent })
+    goToNote(currentNote, { parent: true })
     commitAndPush(`Delete note "${currentNote.name}"`)
   }
 
   const onClickDeleteNotebook = async () => {
     await deleteNotebook(currentNotebook)
-    openNoteRoute({ path: currentNotebook.parent })
+    goToNote(currentNotebook, { parent: true })
     commitAndPush(`Delete notebook ${currentNotebook.name}`)
   }
 
@@ -40,12 +40,8 @@ const Header = ({ className }) => {
         {((currentNotebook && currentNotebook.level > 0) || currentNote) && (
           <Link
             className={styles.backButton}
-            to={buildNoteRoute({
-              path:
-                (currentNote && currentNote.parent) ||
-                (currentNotebook && currentNotebook.parent),
-            })}
-            onClick={currentNote && isMobile ? toggle : undefined}
+            to={toNote(currentNote || currentNotebook, { parent: true })}
+            onClick={isMobile ? open : undefined}
           >
             <BackIcon />
           </Link>
@@ -53,8 +49,8 @@ const Header = ({ className }) => {
         <div className={styles.title}>
           {currentNotebook ? (
             <Link
-              to={buildNoteRoute({ path: currentNotebook.path })}
-              onClick={currentNote && isMobile ? toggle : undefined}
+              to={toNote(currentNotebook)}
+              onClick={isMobile ? close : undefined}
             >
               {currentNotebook.name}
             </Link>
@@ -77,8 +73,8 @@ const Header = ({ className }) => {
         )}
         {currentNotebook && (
           <Link
-            to={buildNoteRoute({ path: currentNotebook.path })}
-            onClick={isMobile ? toggle : undefined}
+            to={toNote(currentNotebook)}
+            onClick={isMobile ? close : undefined}
           >
             <EditIcon size={20} />
           </Link>

@@ -11,15 +11,18 @@ const RouterProvider = ({ children, location, history }) => {
   const path = getQueryParam(location, 'path')
   const isNew = Boolean(getQueryParam(location, 'new'))
 
-  const buildNoteRoute = params => {
+  const toNote = (note, { parent, ...params } = {}) => {
     return {
-      pathname: '/note',
-      search: buildQueryString(params),
+      pathname: note.isNote && !parent ? '/note' : '/notebook',
+      search: buildQueryString({
+        path: parent ? note.parent : note.path,
+        ...(params || {}),
+      }),
     }
   }
 
-  const openNoteRoute = params => {
-    history.push(buildNoteRoute(params))
+  const goToNote = (note, options) => {
+    history.push(toNote(note, options))
   }
 
   return (
@@ -27,8 +30,8 @@ const RouterProvider = ({ children, location, history }) => {
       value={{
         path,
         isNew,
-        buildNoteRoute,
-        openNoteRoute,
+        toNote,
+        goToNote,
       }}
     >
       {children}

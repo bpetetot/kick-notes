@@ -20,9 +20,9 @@ const App = () => {
       {isOpen && <Explorer className={styles.sidebar} />}
       {((!isOpen && isMobile) || !isMobile) && (
         <div className={styles.content}>
+          <Route exact path={['/', '/notebook']} component={Notebook} />
           <Route exact path="/note" component={Note} />
           <Route exact path="/settings" component={Settings} />
-          <Route exact path="/" component={Notebook} />
         </div>
       )}
     </>

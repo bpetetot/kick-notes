@@ -1,30 +1,21 @@
 import React, { useState, useEffect } from 'react'
 import cn from 'classnames'
 import debounce from 'lodash/debounce'
-import MaximizeIcon from 'react-feather/dist/icons/maximize-2'
-import MinimizeIcon from 'react-feather/dist/icons/minimize-2'
 
 import { useNotebook } from 'services/notebook'
-import { useRouter } from 'services/router'
 import { useGit } from 'services/git'
 import { useSettings } from 'services/settings'
 import { updateNote } from 'services/notebook'
-import { useDeviceDetect } from 'services/device'
-import NoteNameInput from 'components/NoteNameInput'
+import NoteTitleBar from 'components/NoteTitleBar'
 import MarkdownPreview from 'components/MarkdownPreview'
-import { useSider } from 'components/Sider/context'
 
-import Notebook from '../Notebook'
 import styles from './note.module.css'
 
 const updateNoteDebounced = debounce(updateNote, 5000)
 
 const Note = ({ className }) => {
-  const { currentNote, currentNotebook } = useNotebook()
+  const { currentNote } = useNotebook()
   const { settings } = useSettings()
-  const { openNoteRoute } = useRouter()
-  const { isOpen, toggle } = useSider()
-  const { isMobile } = useDeviceDetect()
   const { isRepoLoaded, commitAndPush } = useGit()
 
   const [content, setContent] = useState()
@@ -61,45 +52,21 @@ const Note = ({ className }) => {
     if (!isSaved) updateNoteDebounced.flush()
   }
 
-  const onRenameNote = renamed => {
-    openNoteRoute({ path: renamed.path })
-  }
+  if (!currentNote) return null
 
   return (
     <div className={cn(styles.note, className)}>
-      <div className={styles.infobar}>
-        <div className={styles.name}>
-          {currentNote && (
-            <NoteNameInput note={currentNote} onChange={onRenameNote} />
-          )}
-          {!currentNote && currentNotebook && currentNotebook.level > 0 && (
-            <NoteNameInput note={currentNotebook} onChange={onRenameNote} />
-          )}
-          {!currentNote && currentNotebook && currentNotebook.level === 0 && (
-            <h1>Kick Notes</h1>
-          )}
-        </div>
-        <div className={styles.actions}>
-          {currentNote && !isSaved && <div>Not saved</div>}
-          {!isMobile && (
-            <button onClick={toggle} className="link">
-              {isOpen ? <MaximizeIcon size={20} /> : <MinimizeIcon size={20} />}
-            </button>
-          )}
-        </div>
-      </div>
-      {currentNote && settings.editorMode && (
+      <NoteTitleBar note={currentNote} />
+      {settings.editorMode ? (
         <textarea
           value={content}
           onChange={onEditNote}
           onBlur={onBlurEdit}
           className={styles.editor}
         />
-      )}
-      {currentNote && !settings.editorMode && (
+      ) : (
         <MarkdownPreview className={styles.preview} content={content} />
       )}
-      {!currentNote && <Notebook />}
     </div>
   )
 }
