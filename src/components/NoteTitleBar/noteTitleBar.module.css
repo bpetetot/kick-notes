@@ -8,7 +8,7 @@
   align-items: center;
   justify-content: space-between;
   padding: 16px;
-  height: calc(--infobar-bar-height);
+  height: var(--infobar-bar-height);
 }
 
 .name {
@@ -18,8 +18,9 @@
   text-overflow: ellipsis;
 }
 
-.name > h1 {
-  margin: 0;
+.title {
+  font-size: 3rem;
+  padding: 6px;
 }
 
 .actions {

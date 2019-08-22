@@ -1,6 +1,7 @@
 import React from 'react'
 import cn from 'classnames'
 import { Link } from 'react-router-dom'
+import KickNotesIcon from 'react-feather/dist/icons/layers'
 import EditIcon from 'react-feather/dist/icons/plus'
 import BackIcon from 'react-feather/dist/icons/arrow-left'
 import DeleteIcon from 'react-feather/dist/icons/trash'
@@ -9,6 +10,7 @@ import SettingsIcon from 'react-feather/dist/icons/settings'
 import { useNotebook, deleteNote, deleteNotebook } from 'services/notebook'
 import { useRouter } from 'services/router'
 import { useDeviceDetect } from 'services/device'
+import { useAuth } from 'services/auth'
 import { useSider } from 'components/Sider'
 import { useGit } from 'services/git'
 import OfflineIndicator from 'components/Offline'
@@ -16,6 +18,7 @@ import OfflineIndicator from 'components/Offline'
 import styles from './header.module.css'
 
 const Header = ({ className }) => {
+  const { isAuthenticated } = useAuth()
   const { isMobile } = useDeviceDetect()
   const { currentNote, currentNotebook } = useNotebook()
   const { goToNote, toNote } = useRouter()
@@ -46,11 +49,14 @@ const Header = ({ className }) => {
             <BackIcon />
           </Link>
         )}
+        {currentNotebook && currentNotebook.level === 0 && !currentNote && (
+          <KickNotesIcon className={styles.backButton} />
+        )}
         <div className={styles.title}>
           {currentNotebook ? (
             <Link
               to={toNote(currentNotebook)}
-              onClick={isMobile ? close : undefined}
+              onClick={isMobile ? open : undefined}
             >
               {currentNotebook.name}
             </Link>
@@ -61,27 +67,31 @@ const Header = ({ className }) => {
       </div>
       <div className={styles.nav}>
         <OfflineIndicator />
-        {currentNote && (
-          <button onClick={onClickDeleteNote} className="link">
-            <DeleteIcon size={20} />
-          </button>
+        {isAuthenticated && (
+          <>
+            {currentNote && (
+              <button onClick={onClickDeleteNote} className="icon link">
+                <DeleteIcon size={20} />
+              </button>
+            )}
+            {!currentNote && currentNotebook && currentNotebook.level > 0 && (
+              <button onClick={onClickDeleteNotebook} className="icon link">
+                <DeleteIcon size={20} />
+              </button>
+            )}
+            {currentNotebook && (
+              <Link
+                to={toNote(currentNotebook)}
+                onClick={isMobile ? close : undefined}
+              >
+                <EditIcon size={20} />
+              </Link>
+            )}
+            <Link to="/settings" onClick={isMobile ? close : undefined}>
+              <SettingsIcon size={20} />
+            </Link>
+          </>
         )}
-        {!currentNote && currentNotebook && currentNotebook.level > 0 && (
-          <button onClick={onClickDeleteNotebook} className="link">
-            <DeleteIcon size={20} />
-          </button>
-        )}
-        {currentNotebook && (
-          <Link
-            to={toNote(currentNotebook)}
-            onClick={isMobile ? close : undefined}
-          >
-            <EditIcon size={20} />
-          </Link>
-        )}
-        <Link to="/settings">
-          <SettingsIcon size={20} />
-        </Link>
       </div>
     </header>
   )

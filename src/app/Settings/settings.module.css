@@ -1,5 +1,45 @@
 .settings {
-  display: flex;
   height: 100%;
   padding: 2rem;
+}
+
+.settings section {
+  margin-bottom: 4rem;
+}
+
+.settings input[type='text'] {
+  width: 100%;
+  margin-bottom: 0;
+}
+
+.title {
+  font-size: 2rem;
+  margin-top: 1rem;
+  margin-bottom: 2rem;
+}
+
+.account {
+  display: flex;
+}
+
+.accountInfo {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.account .name {
+  font-size: 1.8rem;
+}
+
+.account .email {
+  font-size: var(--font-size-small);
+  color: #555;
+}
+
+.account > img {
+  width: 64px;
+  height: 64px;
+  border-radius: 4px;
+  margin-right: 16px;
 }

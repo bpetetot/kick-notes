@@ -43,6 +43,7 @@ export const AuthProvider = ({ children }) => {
           uid: user.uid,
           displayName: user.displayName,
           email: user.email,
+          photoURL: user.photoURL,
           username,
           token: accessToken,
         })
@@ -63,6 +64,9 @@ export const AuthProvider = ({ children }) => {
   }
 
   const logout = async () => {
+    setToken(null)
+    setUser(null)
+    setIsAuthenticated(false)
     await firebase.auth().signOut()
   }
 

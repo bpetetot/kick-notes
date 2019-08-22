@@ -28,11 +28,13 @@ const NoteTitleBar = ({ note }) => {
         {(note.isNote || note.level > 0) && (
           <NoteNameInput note={note} onChange={goToNote} />
         )}
-        {note.isNotebook && note.level === 0 && <h1>Kick Notes</h1>}
+        {note.isNotebook && note.level === 0 && (
+          <div className={styles.title}>Kick Notes</div>
+        )}
       </div>
       <div className={styles.actions}>
         {note.isNote && (
-          <button onClick={toggleEditor} className="link">
+          <button onClick={toggleEditor} className="icon link">
             {settings.editorMode ? (
               <PreviewIcon size={20} />
             ) : (
@@ -41,7 +43,7 @@ const NoteTitleBar = ({ note }) => {
           </button>
         )}
         {!isMobile && (
-          <button onClick={toggle} className="link">
+          <button onClick={toggle} className="icon link">
             {isOpen ? <MaximizeIcon size={20} /> : <MinimizeIcon size={20} />}
           </button>
         )}

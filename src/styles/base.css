@@ -26,6 +26,7 @@ body {
   /* font size */
   --font-size-normal: 1.5rem;
   --font-size-small: 1.3rem;
+  --font-size-xsmall: 1.1rem;
 
   /* font weight */
   --font-regular: 400;
@@ -153,9 +154,8 @@ input[type='button'].button-primary:focus {
   border-color: var(--accent-color);
 }
 
-button.link,
-svg.link {
-  color: var(--font-color);
+button.link {
+  color: var(--accent-color);
   padding: 0;
   text-align: initial;
   text-transform: initial;
@@ -168,10 +168,13 @@ svg.link {
   cursor: pointer;
 }
 
-button.link:hover,
-svg.link:hover {
+button.link:hover {
   color: var(--accent-dark-color);
   text-decoration: underline;
+}
+
+button.link.icon {
+  color: var(--font-color);
 }
 
 /* Forms
@@ -193,6 +196,8 @@ select {
   border: 1px solid #d1d1d1;
   box-shadow: none;
   box-sizing: border-box;
+  font-size: var(--font-size-normal);
+  border-radius: 4px;
 }
 /* Removes awkward default styles on some inputs for iOS */
 input[type='email'],
