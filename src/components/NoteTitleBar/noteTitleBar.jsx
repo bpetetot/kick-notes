@@ -1,9 +1,12 @@
 import React from 'react'
 import MaximizeIcon from 'react-feather/dist/icons/maximize-2'
 import MinimizeIcon from 'react-feather/dist/icons/minimize-2'
+import PreviewIcon from 'react-feather/dist/icons/eye'
+import EditorIcon from 'react-feather/dist/icons/edit'
 
 import { useRouter } from 'services/router'
 import { useDeviceDetect } from 'services/device'
+import { useSettings } from 'services/settings'
 import NoteNameInput from 'components/NoteNameInput'
 import { useSider } from 'components/Sider/context'
 
@@ -13,8 +16,11 @@ const NoteTitleBar = ({ note }) => {
   const { goToNote } = useRouter()
   const { isOpen, toggle } = useSider()
   const { isMobile } = useDeviceDetect()
+  const { settings, setSetting } = useSettings()
 
   if (!note) return null
+
+  const toggleEditor = () => setSetting('editorMode', !settings.editorMode)
 
   return (
     <div className={styles.infobar}>
@@ -25,6 +31,15 @@ const NoteTitleBar = ({ note }) => {
         {note.isNotebook && note.level === 0 && <h1>Kick Notes</h1>}
       </div>
       <div className={styles.actions}>
+        {note.isNote && (
+          <button onClick={toggleEditor} className="link">
+            {settings.editorMode ? (
+              <PreviewIcon size={20} />
+            ) : (
+              <EditorIcon size={20} />
+            )}
+          </button>
+        )}
         {!isMobile && (
           <button onClick={toggle} className="link">
             {isOpen ? <MaximizeIcon size={20} /> : <MinimizeIcon size={20} />}
