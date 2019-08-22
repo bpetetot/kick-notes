@@ -1,8 +1,12 @@
 .iconLabel {
   display: flex;
   align-items: center;
+  overflow: hidden;
 }
 
 .iconLabel > span {
   margin-left: 16px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }

@@ -5,7 +5,9 @@ import styles from './iconLabel.module.css'
 
 const IconLabel = ({ icon: Icon, children, size, className }) => (
   <div className={cn(styles.iconLabel, className)}>
-    <Icon size={size} />
+    <div>
+      <Icon size={size} />
+    </div>
     <span>{children}</span>
   </div>
 )

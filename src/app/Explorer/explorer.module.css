@@ -1,28 +1,13 @@
-.sidebar {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  border-right: 1px solid #ddd;
-}
-
-.actions {
-  display: flex;
-  flex-direction: column;
-  margin-top: 3rem;
-  padding: 16px;
-}
-
 .explorer {
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid #ddd;
   flex-grow: 1;
-  overflow: hidden;
-}
-
-.list {
   overflow: scroll;
   height: 100%;
 }
 
-.list > a {
+.explorer > a {
   text-decoration: none;
   color: var(--font-color);
 }

@@ -1,9 +1,10 @@
 import React from 'react'
 import cn from 'classnames'
 import { Link } from 'react-router-dom'
-import AddIcon from 'react-feather/dist/icons/plus'
+import EditIcon from 'react-feather/dist/icons/edit-2'
 import BackIcon from 'react-feather/dist/icons/arrow-left'
 import DeleteIcon from 'react-feather/dist/icons/trash'
+import SettingsIcon from 'react-feather/dist/icons/settings'
 
 import { useNotebook, deleteNote, deleteNotebook } from 'services/notebook'
 import { useRouter } from 'services/router'
@@ -79,9 +80,12 @@ const Header = ({ className }) => {
             to={buildNoteRoute({ path: currentNotebook.path })}
             onClick={isMobile ? toggle : undefined}
           >
-            <AddIcon />
+            <EditIcon size={20} />
           </Link>
         )}
+        <Link to="/settings">
+          <SettingsIcon size={20} />
+        </Link>
       </div>
     </header>
   )
