@@ -1,0 +1,42 @@
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-right: 1px solid #ddd;
+}
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  margin-top: 3rem;
+  padding: 16px;
+}
+
+.explorer {
+  flex-grow: 1;
+  overflow: hidden;
+}
+
+.list {
+  overflow: scroll;
+  height: 100%;
+}
+
+.list > a {
+  text-decoration: none;
+  color: var(--font-color);
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  list-style: none;
+  cursor: pointer;
+  height: 48px;
+  padding: 0 16px;
+  margin: 0;
+}
+
+.item.selected {
+  font-weight: var(--font-bold);
+}

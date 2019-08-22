@@ -96,9 +96,11 @@ p {
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 a {
   color: var(--accent-color);
+  text-decoration: none;
 }
 a:hover {
   color: var(--accent-dark-color);
+  text-decoration: underline;
 }
 
 /* Buttons
@@ -229,7 +231,6 @@ input[type='text']:focus,
 input[type='tel']:focus,
 input[type='url']:focus,
 input[type='password']:focus,
-textarea:focus,
 select:focus {
   border: 1px solid #33c3f0;
   outline: 0;

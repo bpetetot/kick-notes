@@ -7,11 +7,8 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: var(--infobar-bar-height);
-  border-bottom: 1px solid #ddd;
-  font-size: var(--font-size-small);
-  line-height: var(--font-size-small);
-  padding-right: 1rem;
+  padding: 2rem;
+  height: calc(--infobar-bar-height);
 }
 
 .name {
@@ -21,13 +18,17 @@
   text-overflow: ellipsis;
 }
 
+.name > h1 {
+  margin: 0;
+}
+
 .actions {
   display: flex;
   align-items: center;
 }
 
 .actions > * {
-  margin-left: 1rem;
+  margin-left: 2rem;
 }
 
 .wrapper {
@@ -41,16 +42,16 @@
   outline: none;
   border: none;
   resize: none;
-  margin: 0;
   font-size: var(--font-size-normal);
   height: calc(100% - var(--infobar-bar-height));
   border: 1px solid transparent;
-  padding: 1rem;
+  margin: 0;
+  padding: 2rem;
 }
 
 .preview {
   font-size: var(--font-size-normal);
   height: calc(100% - var(--infobar-bar-height));
-  padding: 1rem;
   overflow: scroll;
+  padding: 2rem;
 }

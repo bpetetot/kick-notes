@@ -12,6 +12,7 @@ const DEFAULT_NOTE_NAME = 'New note.md'
 
 const DEFAULT_NOTEBOOK = {
   file: 'All notebooks',
+  name: 'Kick notes',
   path: ROOT_FOLDER,
   level: 0,
   isNotebook: true,

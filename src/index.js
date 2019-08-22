@@ -5,7 +5,7 @@ import { AuthProvider } from './services/auth'
 import { NetworkProvider } from './services/network'
 import * as git from './services/git'
 import * as firebase from './services/firebase'
-import Layout from './layout'
+import App from './app'
 import './styles/base.css'
 
 firebase.initialize()
@@ -15,7 +15,7 @@ git.initialize()
 ReactDOM.render(
   <NetworkProvider>
     <AuthProvider>
-      <Layout />
+      <App />
     </AuthProvider>
   </NetworkProvider>,
   document.getElementById('root')

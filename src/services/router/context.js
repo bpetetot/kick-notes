@@ -8,8 +8,7 @@ const RouterContext = React.createContext()
 export const useRouter = () => useContext(RouterContext)
 
 const RouterProvider = ({ children, location, history }) => {
-  const notebookPath = getQueryParam(location, 'notebook')
-  const notePath = getQueryParam(location, 'note')
+  const path = getQueryParam(location, 'path')
   const isNew = Boolean(getQueryParam(location, 'new'))
 
   const buildNoteRoute = params => {
@@ -26,8 +25,7 @@ const RouterProvider = ({ children, location, history }) => {
   return (
     <RouterContext.Provider
       value={{
-        notebookPath,
-        notePath,
+        path,
         isNew,
         buildNoteRoute,
         openNoteRoute,

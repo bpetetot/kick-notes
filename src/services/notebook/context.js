@@ -13,13 +13,13 @@ const NotebookProvider = ({ children }) => {
   const [currentNote, setCurrentNote] = useState()
   const [notes, setNotes] = useState([])
   const { isRepoLoaded } = useGit()
-  const { notebookPath, notePath } = useRouter()
+  const { path } = useRouter()
 
   useEffect(() => {
     if (!isRepoLoaded) return
 
     // load the current notebook
-    getNotebook(notebookPath).then(notebook => {
+    getNotebook(path).then(notebook => {
       listNotes(notebook.path).then(notes => {
         setNotes(notes)
         setCurrentNotebook(notebook)
@@ -27,8 +27,8 @@ const NotebookProvider = ({ children }) => {
     })
 
     // load the current note
-    getNote(notePath).then(setCurrentNote)
-  }, [isRepoLoaded, notebookPath, notePath]) // eslint-disable-line
+    getNote(path).then(setCurrentNote)
+  }, [isRepoLoaded, path]) // eslint-disable-line
 
   return (
     <NotebookContext.Provider

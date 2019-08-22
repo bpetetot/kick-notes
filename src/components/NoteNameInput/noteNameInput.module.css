@@ -1,19 +1,20 @@
 input[type='text'].input {
   margin: 0;
   border: none;
-  font-size: var(--font-size-small);
+  font-size: 3rem;
   font-weight: var(--font-regular);
   width: 100%;
   height: 39px;
   border-radius: 0;
   border: 1px solid transparent;
   text-overflow: ellipsis;
+  padding-left: 0;
 }
 
 input[type='text'].input:focus {
-  border-color: var(--accent-color);
+  border-color: transparent;
 }
 
-input[type='text'].input.error:focus {
-  border-color: var(--error-color);
+input[type='text'].input.error {
+  color: var(--error-color);
 }

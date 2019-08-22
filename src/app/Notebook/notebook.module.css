@@ -1,0 +1,11 @@
+.notebook {
+  display: flex;
+  height: 100%;
+  overflow: hidden;
+  padding: 2rem;
+}
+
+.notebook > * {
+  max-width: 200px;
+  margin: 0.5rem;
+}

@@ -2,7 +2,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 1rem;
+  padding: 16px;
   border-bottom: 1px solid #ddd;
   height: var(--header-bar-height);
 }
@@ -10,10 +10,16 @@
 .brand {
   display: flex;
   align-items: center;
+  text-transform: uppercase;
 }
 
-.siderButton {
-  margin-right: 1rem;
+.brand a {
+  text-decoration: none;
+  color: var(--font-color);
+}
+
+.backButton {
+  margin-right: 24px;
 }
 
 .title {
@@ -26,5 +32,5 @@
 }
 
 .nav > * {
-  margin-left: 2rem;
+  margin-left: 24px;
 }
