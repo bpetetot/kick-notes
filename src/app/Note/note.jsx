@@ -63,6 +63,7 @@ const Note = ({ className }) => {
           onChange={onEditNote}
           onBlur={onBlurEdit}
           className={styles.editor}
+          placeholder="Start to write here."
         />
       ) : (
         <MarkdownPreview className={styles.preview} content={content} />

@@ -83,7 +83,7 @@ p {
 /* Links
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 a {
-  color: var(--accent-color);
+  color: var(--font-color);
   text-decoration: none;
 }
 a:hover {
@@ -155,7 +155,7 @@ input[type='button'].button-primary:focus {
 
 button.link,
 svg.link {
-  color: var(--accent-color);
+  color: var(--font-color);
   padding: 0;
   text-align: initial;
   text-transform: initial;

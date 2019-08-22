@@ -11,6 +11,8 @@ marked.setOptions({
 })
 
 const MarkdownPreview = ({ content, className }) => {
+  if (!content) return null
+
   const html = marked(content)
   return (
     <div className={className} dangerouslySetInnerHTML={{ __html: html }} />

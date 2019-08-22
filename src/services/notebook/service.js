@@ -93,7 +93,7 @@ export const addNote = async parent => {
   if (!parent || !parent.isNotebook) return
 
   const filepath = await generateFilename(parent.path, DEFAULT_NOTE_NAME)
-  await fs.writeFile(filepath, '# New note', { encoding: 'utf8' })
+  await fs.writeFile(filepath, '', { encoding: 'utf8' })
 
   return getInfoNote(filepath)
 }
