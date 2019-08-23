@@ -266,7 +266,7 @@ textarea {
 /* Lists
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 ul {
-  list-style: circle inside;
+  list-style: disc inside;
 }
 ol {
   list-style: decimal inside;
