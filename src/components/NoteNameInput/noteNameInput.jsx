@@ -61,6 +61,7 @@ const NoteNameInput = ({ note, onChange, className }) => {
       onBlur={onRenameNote}
       onKeyPress={onKeyPress}
       autoFocus={isNew}
+      spellCheck="false"
     />
   )
 }

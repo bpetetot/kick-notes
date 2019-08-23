@@ -49,6 +49,16 @@ const Settings = () => {
           onChange={checked => setSetting('darkMode', checked)}
         />
       </section>
+
+      <section>
+        <div className={styles.title}>Note editor</div>
+        <Switch
+          name="editorSpellCheck"
+          label="Enable spell check"
+          defaultChecked={settings.editorSpellCheck}
+          onChange={checked => setSetting('editorSpellCheck', checked)}
+        />
+      </section>
     </div>
   )
 }
