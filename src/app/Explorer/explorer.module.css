@@ -10,6 +10,7 @@
 .explorer > a {
   text-decoration: none;
   color: var(--font-color);
+  outline: 0;
 }
 
 .item {
@@ -24,4 +25,5 @@
 
 .item.selected {
   font-weight: var(--font-bold);
+  color: var(--accent-color);
 }

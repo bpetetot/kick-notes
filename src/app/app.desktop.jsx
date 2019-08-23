@@ -17,8 +17,8 @@ const AppDesktop = () => {
       {!fullscreen && <Explorer className={styles.sidebar} />}
       <div className={styles.content}>
         <Route exact path="/settings" component={Settings} />
-        <Route path="/note" component={Note} />
-        <Route path={['/', '/notebook']} component={Notebook} />
+        <Route exact path="/note" component={Note} />
+        <Route exact path={['/', '/notebook']} component={Notebook} />
       </div>
     </>
   )

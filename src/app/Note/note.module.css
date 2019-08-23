@@ -6,19 +6,19 @@
 .editor {
   height: 100%;
   width: 100%;
-  outline: none;
+  outline: 0;
   border: none;
   resize: none;
   font-size: var(--font-size-normal);
   height: calc(100% - var(--infobar-bar-height));
   border: 1px solid transparent;
   margin: 0;
-  padding: 2rem;
+  padding: 16px;
 }
 
 .preview {
   font-size: var(--font-size-normal);
   height: calc(100% - var(--infobar-bar-height));
   overflow: scroll;
-  padding: 2rem;
+  padding: 16px;
 }
