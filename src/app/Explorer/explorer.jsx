@@ -6,26 +6,18 @@ import NoteIcon from 'react-feather/dist/icons/file'
 
 import { useNotebook } from 'services/notebook'
 import { useRouter } from 'services/router'
-import { useDeviceDetect } from 'services/device'
-import { useSider } from 'components/Sider'
 import IconLabel from 'components/IconLabel'
 
 import styles from './explorer.module.css'
 
 const NotesExplorer = ({ className }) => {
-  const { isMobile } = useDeviceDetect()
-  const { toggle } = useSider()
   const { notes } = useNotebook()
   const { path, toNote } = useRouter()
 
   return (
     <ul className={cn(styles.explorer, className)}>
       {notes.map(item => (
-        <Link
-          key={item.file}
-          to={toNote(item)}
-          onClick={item.isNote && isMobile ? toggle : undefined}
-        >
+        <Link key={item.file} to={toNote(item, { explore: item.isNotebook })}>
           <li
             className={cn(styles.item, {
               [styles.selected]: path === item.path,

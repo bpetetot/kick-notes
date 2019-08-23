@@ -6,17 +6,17 @@ import EditorIcon from 'react-feather/dist/icons/edit'
 
 import { useRouter } from 'services/router'
 import { useDeviceDetect } from 'services/device'
+import { useFullscreen } from 'services/fullscreen'
 import { useSettings } from 'services/settings'
 import NoteNameInput from 'components/NoteNameInput'
-import { useSider } from 'components/Sider/context'
 
 import styles from './noteTitleBar.module.css'
 
 const NoteTitleBar = ({ note }) => {
   const { goToNote } = useRouter()
-  const { isOpen, toggle } = useSider()
   const { isMobile } = useDeviceDetect()
   const { settings, setSetting } = useSettings()
+  const { fullscreen, toggleFullscreen } = useFullscreen()
 
   if (!note) return null
 
@@ -43,8 +43,12 @@ const NoteTitleBar = ({ note }) => {
           </button>
         )}
         {!isMobile && (
-          <button onClick={toggle} className="icon link">
-            {isOpen ? <MaximizeIcon size={20} /> : <MinimizeIcon size={20} />}
+          <button onClick={toggleFullscreen} className="icon link">
+            {fullscreen ? (
+              <MinimizeIcon size={20} />
+            ) : (
+              <MaximizeIcon size={20} />
+            )}
           </button>
         )}
       </div>

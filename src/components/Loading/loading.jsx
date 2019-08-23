@@ -1,9 +1,10 @@
 import React from 'react'
+import cn from 'classnames'
 
 import styles from './loading.module.css'
 
-const Loading = () => (
-  <div className={styles.wrapper}>
+const Loading = ({ viewport }) => (
+  <div className={cn(styles.wrapper, { [styles.viewport]: viewport })}>
     <div className={styles.grid}>
       <div></div>
       <div></div>

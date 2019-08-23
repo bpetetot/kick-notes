@@ -9,9 +9,7 @@ import SettingsIcon from 'react-feather/dist/icons/settings'
 
 import { useNotebook, deleteNote, deleteNotebook } from 'services/notebook'
 import { useRouter } from 'services/router'
-import { useDeviceDetect } from 'services/device'
 import { useAuth } from 'services/auth'
-import { useSider } from 'components/Sider'
 import { useGit } from 'services/git'
 import OfflineIndicator from 'components/Offline'
 
@@ -19,21 +17,19 @@ import styles from './header.module.css'
 
 const Header = ({ className }) => {
   const { isAuthenticated } = useAuth()
-  const { isMobile } = useDeviceDetect()
   const { currentNote, currentNotebook } = useNotebook()
   const { goToNote, toNote } = useRouter()
-  const { open, close } = useSider()
   const { commitAndPush } = useGit()
 
   const onClickDeleteNote = async () => {
     await deleteNote(currentNote)
-    goToNote(currentNote, { parent: true })
+    goToNote(currentNote, { parent: true, explore: true })
     commitAndPush(`Delete note "${currentNote.name}"`)
   }
 
   const onClickDeleteNotebook = async () => {
     await deleteNotebook(currentNotebook)
-    goToNote(currentNotebook, { parent: true })
+    goToNote(currentNotebook, { parent: true, explore: true })
     commitAndPush(`Delete notebook ${currentNotebook.name}`)
   }
 
@@ -43,8 +39,10 @@ const Header = ({ className }) => {
         {((currentNotebook && currentNotebook.level > 0) || currentNote) && (
           <Link
             className={styles.backButton}
-            to={toNote(currentNote || currentNotebook, { parent: true })}
-            onClick={isMobile ? open : undefined}
+            to={toNote(currentNote || currentNotebook, {
+              explore: true,
+              parent: true,
+            })}
           >
             <BackIcon />
           </Link>
@@ -54,10 +52,7 @@ const Header = ({ className }) => {
         )}
         <div className={styles.title}>
           {currentNotebook ? (
-            <Link
-              to={toNote(currentNotebook)}
-              onClick={isMobile ? open : undefined}
-            >
+            <Link to={toNote(currentNotebook, { explore: true })}>
               {currentNotebook.name}
             </Link>
           ) : (
@@ -80,14 +75,11 @@ const Header = ({ className }) => {
               </button>
             )}
             {currentNotebook && (
-              <Link
-                to={toNote(currentNotebook)}
-                onClick={isMobile ? close : undefined}
-              >
+              <Link to={toNote(currentNotebook)}>
                 <EditIcon size={20} />
               </Link>
             )}
-            <Link to="/settings" onClick={isMobile ? close : undefined}>
+            <Link to="/settings">
               <SettingsIcon size={20} />
             </Link>
           </>

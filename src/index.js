@@ -1,8 +1,11 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+import { BrowserRouter, Route, Switch } from 'react-router-dom'
 
-import { AuthProvider } from './services/auth'
+import { AuthProvider, AUTH_REDIRECT_PATH } from './services/auth'
 import { NetworkProvider } from './services/network'
+import { FullscreenProvider } from './services/fullscreen'
+import PrivateRoute from './services/auth/PrivateRoute'
 import * as git from './services/git'
 import * as firebase from './services/firebase'
 import App from './app'
@@ -14,9 +17,16 @@ git.initialize()
 
 ReactDOM.render(
   <NetworkProvider>
-    <AuthProvider>
-      <App />
-    </AuthProvider>
+    <FullscreenProvider>
+      <AuthProvider>
+        <BrowserRouter>
+          <Switch>
+            <Route exact path={AUTH_REDIRECT_PATH} />
+            <PrivateRoute path="/" component={App} />
+          </Switch>
+        </BrowserRouter>
+      </AuthProvider>
+    </FullscreenProvider>
   </NetworkProvider>,
   document.getElementById('root')
 )

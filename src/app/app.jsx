@@ -1,32 +1,41 @@
 import React from 'react'
-import { Route } from 'react-router-dom'
 
+import { useAuth } from 'services/auth'
+import { RouterProvider } from 'services/router'
+import { useNetwork } from 'services/network'
+import { GitProvider } from 'services/git'
+import { NotebookProvider } from 'services/notebook'
+import { SettingsProvider } from 'services/settings'
 import { useDeviceDetect } from 'services/device'
-import { useSider } from 'components/Sider'
 
-import Note from './Note'
-import Notebook from './Notebook'
-import Settings from './Settings'
-import Explorer from './Explorer'
-
+import Header from './Header'
+import AppDesktop from './app.desktop'
+import AppMobile from './app.mobile'
 import styles from './app.module.css'
+import { useFullscreen } from 'services/fullscreen'
 
-const App = () => {
-  const { isOpen } = useSider()
+const Layout = () => {
+  const { user } = useAuth()
+  const { isOnline } = useNetwork()
   const { isMobile } = useDeviceDetect()
+  const { fullscreen } = useFullscreen()
 
   return (
-    <>
-      {isOpen && <Explorer className={styles.sidebar} />}
-      {((!isOpen && isMobile) || !isMobile) && (
-        <div className={styles.content}>
-          <Route exact path={['/', '/notebook']} component={Notebook} />
-          <Route exact path="/note" component={Note} />
-          <Route exact path="/settings" component={Settings} />
-        </div>
-      )}
-    </>
+    <RouterProvider>
+      <GitProvider user={user} isOnline={isOnline}>
+        <SettingsProvider>
+          <NotebookProvider>
+            <div className={styles.layout}>
+              {!fullscreen && <Header />}
+              <div className={styles.main}>
+                {isMobile ? <AppMobile /> : <AppDesktop />}
+              </div>
+            </div>
+          </NotebookProvider>
+        </SettingsProvider>
+      </GitProvider>
+    </RouterProvider>
   )
 }
 
-export default App
+export default Layout
