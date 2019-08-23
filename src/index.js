@@ -5,6 +5,7 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import { AuthProvider, AUTH_REDIRECT_PATH } from './services/auth'
 import { NetworkProvider } from './services/network'
 import { FullscreenProvider } from './services/fullscreen'
+import { NavigationProvider } from './services/navigation'
 import PrivateRoute from './services/auth/PrivateRoute'
 import * as git from './services/git'
 import * as firebase from './services/firebase'
@@ -20,10 +21,12 @@ ReactDOM.render(
     <FullscreenProvider>
       <AuthProvider>
         <BrowserRouter>
-          <Switch>
-            <Route exact path={AUTH_REDIRECT_PATH} />
-            <PrivateRoute path="/" component={App} />
-          </Switch>
+          <NavigationProvider>
+            <Switch>
+              <Route exact path={AUTH_REDIRECT_PATH} />
+              <PrivateRoute path="/" component={App} />
+            </Switch>
+          </NavigationProvider>
         </BrowserRouter>
       </AuthProvider>
     </FullscreenProvider>

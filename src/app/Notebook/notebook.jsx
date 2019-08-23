@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { useNotebook, addNote, addNotebook } from 'services/notebook'
-import { useRouter } from 'services/router'
+import { useNavigation } from 'services/navigation'
 import { useGit } from 'services/git'
 import { useSettings } from 'services/settings'
 import NoteTitleBar from 'components/NoteTitleBar'
@@ -10,7 +10,7 @@ import styles from './notebook.module.css'
 
 const Notebook = () => {
   const { currentNotebook } = useNotebook()
-  const { goToNote } = useRouter()
+  const { goToNote } = useNavigation()
   const { commitAndPush } = useGit()
   const { setSetting } = useSettings()
 

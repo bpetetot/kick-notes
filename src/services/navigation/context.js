@@ -5,11 +5,11 @@ import { useDeviceDetect } from 'services/device'
 
 import { getQueryParam, buildQueryString } from './services'
 
-const RouterContext = React.createContext()
+const NavigationContext = React.createContext()
 
-export const useRouter = () => useContext(RouterContext)
+export const useNavigation = () => useContext(NavigationContext)
 
-const RouterProvider = ({ children, location, history }) => {
+const NavigationProvider = ({ children, location, history }) => {
   const { isMobile } = useDeviceDetect()
   const path = getQueryParam(location, 'path')
   const isNew = Boolean(getQueryParam(location, 'new'))
@@ -32,12 +32,16 @@ const RouterProvider = ({ children, location, history }) => {
     }
   }
 
-  const goToNote = (note, options) => {
-    history.push(toNote(note, options))
+  const goToNote = (note, { replace, ...options } = {}) => {
+    if (replace) {
+      history.replace(toNote(note, options))
+    } else {
+      history.push(toNote(note, options))
+    }
   }
 
   return (
-    <RouterContext.Provider
+    <NavigationContext.Provider
       value={{
         path,
         isNew,
@@ -46,8 +50,8 @@ const RouterProvider = ({ children, location, history }) => {
       }}
     >
       {children}
-    </RouterContext.Provider>
+    </NavigationContext.Provider>
   )
 }
 
-export default withRouter(RouterProvider)
+export default withRouter(NavigationProvider)

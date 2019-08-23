@@ -8,7 +8,7 @@ import DeleteIcon from 'react-feather/dist/icons/trash'
 import SettingsIcon from 'react-feather/dist/icons/settings'
 
 import { useNotebook, deleteNote, deleteNotebook } from 'services/notebook'
-import { useRouter } from 'services/router'
+import { useNavigation } from 'services/navigation'
 import { useAuth } from 'services/auth'
 import { useGit } from 'services/git'
 import OfflineIndicator from 'components/Offline'
@@ -18,18 +18,18 @@ import styles from './header.module.css'
 const Header = ({ className }) => {
   const { isAuthenticated } = useAuth()
   const { currentNote, currentNotebook } = useNotebook()
-  const { goToNote, toNote } = useRouter()
+  const { goToNote, toNote } = useNavigation()
   const { commitAndPush } = useGit()
 
   const onClickDeleteNote = async () => {
     await deleteNote(currentNote)
-    goToNote(currentNote, { parent: true, explore: true })
+    goToNote(currentNote, { parent: true, explore: true, replace: true })
     commitAndPush(`Delete note "${currentNote.name}"`)
   }
 
   const onClickDeleteNotebook = async () => {
     await deleteNotebook(currentNotebook)
-    goToNote(currentNotebook, { parent: true, explore: true })
+    goToNote(currentNotebook, { parent: true, explore: true, replace: true })
     commitAndPush(`Delete notebook ${currentNotebook.name}`)
   }
 

@@ -4,7 +4,7 @@ import MinimizeIcon from 'react-feather/dist/icons/minimize-2'
 import PreviewIcon from 'react-feather/dist/icons/eye'
 import EditorIcon from 'react-feather/dist/icons/edit'
 
-import { useRouter } from 'services/router'
+import { useNavigation } from 'services/navigation'
 import { useDeviceDetect } from 'services/device'
 import { useFullscreen } from 'services/fullscreen'
 import { useSettings } from 'services/settings'
@@ -13,7 +13,7 @@ import NoteNameInput from 'components/NoteNameInput'
 import styles from './noteTitleBar.module.css'
 
 const NoteTitleBar = ({ note }) => {
-  const { goToNote } = useRouter()
+  const { goToNote } = useNavigation()
   const { isMobile } = useDeviceDetect()
   const { settings, setSetting } = useSettings()
   const { fullscreen, toggleFullscreen } = useFullscreen()

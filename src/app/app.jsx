@@ -1,7 +1,6 @@
 import React from 'react'
 
 import { useAuth } from 'services/auth'
-import { RouterProvider } from 'services/router'
 import { useNetwork } from 'services/network'
 import { GitProvider } from 'services/git'
 import { NotebookProvider } from 'services/notebook'
@@ -21,20 +20,18 @@ const Layout = () => {
   const { fullscreen } = useFullscreen()
 
   return (
-    <RouterProvider>
-      <GitProvider user={user} isOnline={isOnline}>
-        <SettingsProvider>
-          <NotebookProvider>
-            <div className={styles.layout}>
-              {!fullscreen && <Header />}
-              <div className={styles.main}>
-                {isMobile ? <AppMobile /> : <AppDesktop />}
-              </div>
+    <GitProvider user={user} isOnline={isOnline}>
+      <SettingsProvider>
+        <NotebookProvider>
+          <div className={styles.layout}>
+            {!fullscreen && <Header />}
+            <div className={styles.main}>
+              {isMobile ? <AppMobile /> : <AppDesktop />}
             </div>
-          </NotebookProvider>
-        </SettingsProvider>
-      </GitProvider>
-    </RouterProvider>
+          </div>
+        </NotebookProvider>
+      </SettingsProvider>
+    </GitProvider>
   )
 }
 

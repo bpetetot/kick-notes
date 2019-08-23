@@ -5,14 +5,14 @@ import NotebookIcon from 'react-feather/dist/icons/layers'
 import NoteIcon from 'react-feather/dist/icons/file'
 
 import { useNotebook } from 'services/notebook'
-import { useRouter } from 'services/router'
+import { useNavigation } from 'services/navigation'
 import IconLabel from 'components/IconLabel'
 
 import styles from './explorer.module.css'
 
 const NotesExplorer = ({ className }) => {
   const { notes } = useNotebook()
-  const { path, toNote } = useRouter()
+  const { path, toNote } = useNavigation()
 
   return (
     <ul className={cn(styles.explorer, className)}>

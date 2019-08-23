@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react'
 import cn from 'classnames'
 
-import { useRouter } from 'services/router'
+import { useNavigation } from 'services/navigation'
 import { rename } from 'services/notebook'
 import { isValidFilename } from 'services/fs'
 import { useGit } from 'services/git'
@@ -9,7 +9,7 @@ import { useGit } from 'services/git'
 import styles from './noteNameInput.module.css'
 
 const NoteNameInput = ({ note, onChange, className }) => {
-  const { isNew } = useRouter()
+  const { isNew } = useNavigation()
   const { commitAndPush } = useGit()
 
   const [name, setName] = useState(note.name)
