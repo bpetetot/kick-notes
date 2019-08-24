@@ -11,6 +11,7 @@ import { SettingsProvider } from './services/settings'
 import PrivateRoute from './services/auth/PrivateRoute'
 import * as git from './services/git'
 import * as firebase from './services/firebase'
+import * as serviceWorker from './sw'
 import App from './app'
 import Layout from './styles/Layout'
 import './styles/base.css'
@@ -43,8 +44,5 @@ ReactDOM.render(
   document.getElementById('root')
 )
 
-// import * as serviceWorker from './serviceWorker';
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-// serviceWorker.unregister();
+// register service worker
+serviceWorker.register()
