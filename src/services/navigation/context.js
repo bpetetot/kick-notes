@@ -9,6 +9,10 @@ const NavigationContext = React.createContext()
 
 export const useNavigation = () => useContext(NavigationContext)
 
+// Fix an issue in the service-worker of CRA including dots in blacklist
+const escapeDots = str => (str ? str.replace('.', ':') : '')
+const revealDots = str => (str ? str.replace(':', '.') : '')
+
 const NavigationProvider = ({ children, location, history }) => {
   const { isMobile } = useDeviceDetect()
   const path = getQueryParam(location, 'path')
@@ -26,7 +30,7 @@ const NavigationProvider = ({ children, location, history }) => {
     return {
       pathname,
       search: buildQueryString({
-        path: parent ? note.parent : note.path,
+        path: parent ? note.parent : escapeDots(note.path),
         ...(params || {}),
       }),
     }
@@ -40,10 +44,12 @@ const NavigationProvider = ({ children, location, history }) => {
     }
   }
 
+  console.log({ path, res: revealDots(path) })
+
   return (
     <NavigationContext.Provider
       value={{
-        path,
+        path: revealDots(path),
         isNew,
         toNote,
         goToNote,

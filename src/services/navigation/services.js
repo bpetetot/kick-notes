@@ -7,7 +7,7 @@ export const buildQueryString = params => {
   const queryString = Object.keys(params)
     .map(key => {
       if (params[key]) {
-        return `${key}=${params[key]}`
+        return `${key}=${encodeURIComponent(params[key])}`
       }
       return null
     })
