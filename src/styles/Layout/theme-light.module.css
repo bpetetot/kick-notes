@@ -41,3 +41,11 @@
   color: var(--color-text);
   background-color: var(--color-background);
 }
+
+@media (max-width: 550px) {
+  .theme {
+    --font-size-normal: 1.6rem;
+    --font-size-small: 1.4rem;
+    --font-size-xsmall: 1.2rem;
+  }
+}

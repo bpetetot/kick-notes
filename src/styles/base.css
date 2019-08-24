@@ -24,6 +24,12 @@ body {
   margin: 0;
 }
 
+@media (max-width: 550px) {
+  body {
+    font-size: 1.6em;
+  }
+}
+
 *,
 :before,
 :after {

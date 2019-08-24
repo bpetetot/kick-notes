@@ -44,8 +44,6 @@ const NavigationProvider = ({ children, location, history }) => {
     }
   }
 
-  console.log({ path, res: revealDots(path) })
-
   return (
     <NavigationContext.Provider
       value={{
