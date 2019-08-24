@@ -64,7 +64,7 @@ const Note = ({ className }) => {
           onBlur={onBlurEdit}
           className={styles.editor}
           placeholder="Start to write here."
-          spellCheck={settings.editorSpellCheck}
+          spellCheck={settings.editorSpellCheck === true}
         />
       ) : (
         <MarkdownPreview className={styles.preview} content={content} />

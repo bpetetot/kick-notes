@@ -1,5 +1,5 @@
 .offline {
-  color: var(--error-color);
+  color: var(--color-error);
 }
 
 .offline > span {

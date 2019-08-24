@@ -1,5 +1,7 @@
 import React, { useState, useContext } from 'react'
 
+import { useStorage } from 'services/storage'
+
 export const SettingsContext = React.createContext()
 
 const DEFAULT_SETTINGS = {
@@ -9,13 +11,18 @@ const DEFAULT_SETTINGS = {
 export const useSettings = () => useContext(SettingsContext)
 
 export const SettingsProvider = ({ children }) => {
-  const [settings, setSettings] = useState(DEFAULT_SETTINGS)
+  const [storedSettings, saveSettings] = useStorage('settings')
+
+  const defaultSettings = storedSettings
+    ? JSON.parse(storedSettings)
+    : DEFAULT_SETTINGS
+
+  const [settings, setSettings] = useState(defaultSettings)
 
   const setSetting = (key, value) => {
-    setSettings({
-      ...settings,
-      [key]: value,
-    })
+    const newSettings = { ...settings, [key]: value }
+    setSettings(newSettings)
+    saveSettings(JSON.stringify(newSettings))
   }
 
   return (

@@ -11,7 +11,9 @@
   resize: none;
   font-size: var(--font-size-normal);
   height: calc(100% - var(--infobar-bar-height));
+  background-color: transparent;
   border: 1px solid transparent;
+  border-radius: 0;
   margin: 0;
   padding: 16px;
 }

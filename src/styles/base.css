@@ -18,26 +18,9 @@ html {
   line-height: normal;
 }
 body {
-  /* colors */
-  --accent-color: #1eaedb;
-  --accent-dark-color: #0fa0ce;
-  --font-color: #222;
-  --error-color: #dc3545;
-
-  /* font size */
-  --font-size-normal: 1.5rem;
-  --font-size-small: 1.3rem;
-  --font-size-xsmall: 1.1rem;
-
-  /* font weight */
-  --font-regular: 400;
-  --font-bold: 600;
-
   font-size: 1.5em; /* currently ems cause chrome bug misinterpreting rems on body element */
-  font-weight: var(--font-regular);
   font-family: 'Raleway', 'HelveticaNeue', 'Helvetica Neue', Helvetica, Arial,
     sans-serif;
-  color: var(--font-color);
   margin: 0;
 }
 
@@ -45,6 +28,11 @@ body {
 :before,
 :after {
   box-sizing: border-box;
+}
+
+::selection {
+  background: var(--color-accent);
+  color: #fff;
 }
 
 /* Typography
@@ -85,17 +73,17 @@ p {
 /* Links
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 a {
-  color: var(--font-color);
+  color: var(--color-text);
   text-decoration: none;
   outline: 0;
 }
 a:hover {
-  color: var(--accent-dark-color);
+  color: var(--color-accent-dark);
   text-decoration: underline;
 }
 a:focus,
 a:active {
-  color: var(--accent-color);
+  color: var(--color-accent);
 }
 
 /* Buttons
@@ -108,7 +96,8 @@ input[type='button'] {
   display: inline-block;
   height: 38px;
   padding: 0 30px;
-  color: #555;
+  color: var(--color-button);
+  background-color: var(--color-button-background);
   text-align: center;
   font-size: 11px;
   font-weight: var(--font-bold);
@@ -117,9 +106,8 @@ input[type='button'] {
   text-transform: uppercase;
   text-decoration: none;
   white-space: nowrap;
-  background-color: transparent;
   border-radius: 4px;
-  border: 1px solid #bbb;
+  border: 1px solid var(--color-button-border);
   cursor: pointer;
   box-sizing: border-box;
 }
@@ -133,17 +121,18 @@ button:focus,
 input[type='submit']:focus,
 input[type='reset']:focus,
 input[type='button']:focus {
-  color: #333;
-  border-color: #888;
+  color: var(--color-button-hover);
+  background-color: var(--color-button-background-hover);
+  border-color: var(--color-button-border-hover);
 }
 .button.button-primary,
 button.button-primary,
 input[type='submit'].button-primary,
 input[type='reset'].button-primary,
 input[type='button'].button-primary {
-  color: #fff;
-  background-color: #33c3f0;
-  border-color: #33c3f0;
+  color: var(--color-button-primary);
+  background-color: var(--color-button-primary-background);
+  border-color: var(--color-button-primary-border);
 }
 .button.button-primary:hover,
 button.button-primary:hover,
@@ -155,13 +144,13 @@ button.button-primary:focus,
 input[type='submit'].button-primary:focus,
 input[type='reset'].button-primary:focus,
 input[type='button'].button-primary:focus {
-  color: #fff;
-  background-color: var(--accent-color);
-  border-color: var(--accent-color);
+  color: var(--color-button-primary-hover);
+  background-color: var(--color-button-primary-background-hover);
+  border-color: var(--color-button-primary-border-hover);
 }
 
 button.link {
-  color: var(--accent-color);
+  color: var(--color-accent);
   padding: 0;
   text-align: initial;
   text-transform: initial;
@@ -176,17 +165,17 @@ button.link {
 }
 
 button.link:hover {
-  color: var(--accent-dark-color);
+  color: var(--color-accent-dark);
   text-decoration: underline;
 }
 
 button.link.icon {
-  color: var(--font-color);
+  color: var(--color-text);
 }
 
 button.link.icon:focus,
 button.link.icon:active {
-  color: var(--accent-color);
+  color: var(--color-accent);
 }
 
 /* Forms
@@ -204,12 +193,13 @@ select {
     sans-serif;
   height: 38px;
   padding: 6px 10px; /* The 6px vertically centers text on FF, ignored by Webkit */
-  background-color: #fff;
-  border: 1px solid #d1d1d1;
   box-shadow: none;
   box-sizing: border-box;
   font-size: var(--font-size-normal);
   border-radius: 4px;
+  border: 1px solid var(--color-input-border);
+  background-color: var(--color-input-background);
+  color: var(--color-text);
 }
 /* Removes awkward default styles on some inputs for iOS */
 input[type='email'],
@@ -260,7 +250,7 @@ label > .label-body {
 }
 textarea {
   font-weight: var(--font-regular);
-  color: var(--font-color);
+  color: var(--color-text);
 }
 
 /* Lists

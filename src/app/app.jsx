@@ -1,10 +1,10 @@
 import React from 'react'
+import cn from 'classnames'
 
 import { useAuth } from 'services/auth'
 import { useNetwork } from 'services/network'
 import { GitProvider } from 'services/git'
 import { NotebookProvider } from 'services/notebook'
-import { SettingsProvider } from 'services/settings'
 import { useDeviceDetect } from 'services/device'
 
 import Header from './Header'
@@ -21,16 +21,12 @@ const Layout = () => {
 
   return (
     <GitProvider user={user} isOnline={isOnline}>
-      <SettingsProvider>
-        <NotebookProvider>
-          <div className={styles.layout}>
-            {!fullscreen && <Header />}
-            <div className={styles.main}>
-              {isMobile ? <AppMobile /> : <AppDesktop />}
-            </div>
-          </div>
-        </NotebookProvider>
-      </SettingsProvider>
+      <NotebookProvider>
+        {!fullscreen && <Header />}
+        <div className={cn(styles.main, { [styles.fullscreen]: fullscreen })}>
+          {isMobile ? <AppMobile /> : <AppDesktop />}
+        </div>
+      </NotebookProvider>
     </GitProvider>
   )
 }

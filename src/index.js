@@ -6,10 +6,13 @@ import { AuthProvider, AUTH_REDIRECT_PATH } from './services/auth'
 import { NetworkProvider } from './services/network'
 import { FullscreenProvider } from './services/fullscreen'
 import { NavigationProvider } from './services/navigation'
+import { SettingsProvider } from './services/settings'
+
 import PrivateRoute from './services/auth/PrivateRoute'
 import * as git from './services/git'
 import * as firebase from './services/firebase'
 import App from './app'
+import Layout from './styles/Layout'
 import './styles/base.css'
 
 firebase.initialize()
@@ -22,10 +25,14 @@ ReactDOM.render(
       <AuthProvider>
         <BrowserRouter>
           <NavigationProvider>
-            <Switch>
-              <Route exact path={AUTH_REDIRECT_PATH} />
-              <PrivateRoute path="/" component={App} />
-            </Switch>
+            <SettingsProvider>
+              <Layout>
+                <Switch>
+                  <Route exact path={AUTH_REDIRECT_PATH} />
+                  <PrivateRoute path="/" component={App} />
+                </Switch>
+              </Layout>
+            </SettingsProvider>
           </NavigationProvider>
         </BrowserRouter>
       </AuthProvider>

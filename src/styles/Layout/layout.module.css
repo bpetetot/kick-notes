@@ -1,0 +1,8 @@
+.layout {
+  height: 100vh;
+  overflow: hidden;
+
+  --header-bar-height: 56px;
+  --infobar-bar-height: 80px;
+  --sidebar-width: 240px;
+}
