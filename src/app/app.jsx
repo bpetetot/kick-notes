@@ -7,6 +7,7 @@ import { GitProvider } from 'services/git'
 import { NotebookProvider } from 'services/notebook'
 import { useDeviceDetect } from 'services/device'
 
+import LoadingScreen from './Loading'
 import Header from './Header'
 import AppDesktop from './app.desktop'
 import AppMobile from './app.mobile'
@@ -22,10 +23,12 @@ const Layout = () => {
   return (
     <GitProvider user={user} isOnline={isOnline}>
       <NotebookProvider>
-        {!fullscreen && <Header />}
-        <div className={cn(styles.main, { [styles.fullscreen]: fullscreen })}>
-          {isMobile ? <AppMobile /> : <AppDesktop />}
-        </div>
+        <LoadingScreen>
+          {!fullscreen && <Header />}
+          <div className={cn(styles.main, { [styles.fullscreen]: fullscreen })}>
+            {isMobile ? <AppMobile /> : <AppDesktop />}
+          </div>
+        </LoadingScreen>
       </NotebookProvider>
     </GitProvider>
   )

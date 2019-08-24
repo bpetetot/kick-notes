@@ -16,14 +16,12 @@ const updateNoteDebounced = debounce(updateNote, 5000)
 const Note = ({ className }) => {
   const { currentNote } = useNotebook()
   const { settings } = useSettings()
-  const { isRepoLoaded, commitAndPush } = useGit()
+  const { commitAndPush } = useGit()
 
   const [content, setContent] = useState()
   const [isSaved, setIsSaved] = useState(true)
 
   useEffect(() => {
-    if (!isRepoLoaded) return
-
     if (currentNote) {
       if (!isSaved) updateNoteDebounced.flush()
       setContent(currentNote.content)
@@ -33,7 +31,7 @@ const Note = ({ className }) => {
       // save changes when component unmount
       if (!isSaved) updateNoteDebounced.flush()
     }
-  }, [isRepoLoaded, currentNote]) // eslint-disable-line
+  }, [currentNote]) // eslint-disable-line
 
   const onEditNote = event => {
     if (isSaved) setIsSaved(false)
