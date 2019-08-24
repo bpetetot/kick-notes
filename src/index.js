@@ -15,6 +15,8 @@ import App from './app'
 import Layout from './styles/Layout'
 import './styles/base.css'
 
+import 'pwacompat'
+
 firebase.initialize()
 
 git.initialize()

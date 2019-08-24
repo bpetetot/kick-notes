@@ -11,13 +11,13 @@ const Layout = ({ children }) => {
   const { settings } = useSettings()
 
   return (
-    <div
+    <main
       className={cn(styles.layout, light.theme, {
         [dark.theme]: settings.darkMode,
       })}
     >
       {children}
-    </div>
+    </main>
   )
 }
 
