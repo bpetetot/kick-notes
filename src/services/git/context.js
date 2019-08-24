@@ -21,7 +21,6 @@ export const GitProvider = ({ children, user, isOnline }) => {
       if (!isRepoLoaded && isOnline) {
         // clone or pull the repo
         await cloneOrPull(user)
-        setIsRepoLoaded(true)
 
         // Push to the repo if needed
         if (/false/i.test(isSync) && isOnline) {
@@ -32,6 +31,7 @@ export const GitProvider = ({ children, user, isOnline }) => {
           console.log('Already synchronized.')
         }
       }
+      setIsRepoLoaded(true)
     }
     load()
 
