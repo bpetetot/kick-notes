@@ -28,15 +28,20 @@ export const AuthProvider = ({ children }) => {
         let username
         const accessToken = (credential && credential.accessToken) || token
         if (accessToken && isOnline) {
-          const resp = await fetch('https://api.github.com/user', {
-            method: 'GET',
-            headers: {
-              'content-type': 'application/json',
-              Authorization: `token ${accessToken}`,
-            },
-          })
-          const data = await resp.json()
-          username = data.login
+          try {
+            const resp = await fetch('https://api.github.com/user', {
+              method: 'GET',
+              headers: {
+                'content-type': 'application/json',
+                Authorization: `token ${accessToken}`,
+              },
+            })
+            const data = await resp.json()
+            username = data.login
+          } catch (e) {
+            console.error('Unable to get https://api.github.com/user')
+            console.error(e)
+          }
         }
 
         setUser({
