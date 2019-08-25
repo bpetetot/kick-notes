@@ -28,7 +28,7 @@ const Settings = () => {
               <div className={styles.name}>{user.displayName}</div>
               <div className={styles.email}>{user.email}</div>
             </div>
-            <button className="link" onClick={handleLogout}>
+            <button type="button" className="link" onClick={handleLogout}>
               Sign out
             </button>
           </div>
@@ -36,8 +36,10 @@ const Settings = () => {
       </section>
 
       <section>
-        <div className={styles.title}>Git repository</div>
-        <input type="text" defaultValue={getRepoUrl()} disabled />
+        <label className={styles.title} htmlFor="repoUrl">
+          Git repository
+        </label>
+        <input id="repoUrl" type="text" defaultValue={getRepoUrl()} disabled />
       </section>
 
       <section>

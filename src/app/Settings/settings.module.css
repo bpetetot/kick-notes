@@ -18,6 +18,7 @@
 
 .title {
   font-size: 2rem;
+  font-weight: var(--font-regular);
   margin-top: 1rem;
 }
 

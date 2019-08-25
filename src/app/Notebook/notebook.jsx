@@ -30,10 +30,16 @@ const Notebook = () => {
     <div className={styles.notebook}>
       <NoteTitleBar note={currentNotebook} />
       <div className={styles.content}>
-        <button className="button-primary" onClick={onClickAddNote}>
+        <button
+          type="button"
+          className="button-primary"
+          onClick={onClickAddNote}
+        >
           New note
         </button>
-        <button onClick={onClickAddNotebook}>New notebook</button>
+        <button type="button" onClick={onClickAddNotebook}>
+          New notebook
+        </button>
       </div>
     </div>
   )

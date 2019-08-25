@@ -8,7 +8,9 @@ const Login = () => {
   const { login } = useAuth()
   return (
     <div className={styles.login}>
-      <button onClick={login}>Login with github</button>
+      <button type="button" onClick={login}>
+        Login with github
+      </button>
     </div>
   )
 }

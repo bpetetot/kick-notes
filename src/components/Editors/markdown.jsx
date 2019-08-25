@@ -40,6 +40,7 @@ const MarkdownEditor = ({ note, onChange, onBlur, toolbar, spellCheck }) => {
       {toolbar && (
         <div className={styles.actionbar}>
           <button
+            type="button"
             name="editor-action"
             className="icon link"
             onClick={apply(['### '])}
@@ -47,6 +48,7 @@ const MarkdownEditor = ({ note, onChange, onBlur, toolbar, spellCheck }) => {
             <TitleIcon size={16} />
           </button>
           <button
+            type="button"
             name="editor-action"
             className="icon link"
             onClick={apply(['**', '**'])}
@@ -54,6 +56,7 @@ const MarkdownEditor = ({ note, onChange, onBlur, toolbar, spellCheck }) => {
             <BoldIcon size={16} />
           </button>
           <button
+            type="button"
             name="editor-action"
             className="icon link"
             onClick={apply(['_', '_'])}
@@ -62,6 +65,7 @@ const MarkdownEditor = ({ note, onChange, onBlur, toolbar, spellCheck }) => {
           </button>
           <div className={styles.separator} />
           <button
+            type="button"
             name="editor-action"
             className="icon link"
             onClick={apply(['\n\n> '])}
@@ -69,6 +73,7 @@ const MarkdownEditor = ({ note, onChange, onBlur, toolbar, spellCheck }) => {
             <QuoteIcon size={16} />
           </button>
           <button
+            type="button"
             name="editor-action"
             className="icon link"
             onClick={apply(['`', '`'])}
@@ -76,6 +81,7 @@ const MarkdownEditor = ({ note, onChange, onBlur, toolbar, spellCheck }) => {
             <CodeIcon size={16} />
           </button>
           <button
+            type="button"
             name="editor-action"
             className="icon link"
             onClick={apply(['\n```\n', '\n```\n'])}
@@ -83,6 +89,7 @@ const MarkdownEditor = ({ note, onChange, onBlur, toolbar, spellCheck }) => {
             <CodeIcon size={16} />
           </button>
           <button
+            type="button"
             name="editor-action"
             className="icon link"
             onClick={apply(['[', '](url)'])}
@@ -91,6 +98,7 @@ const MarkdownEditor = ({ note, onChange, onBlur, toolbar, spellCheck }) => {
           </button>
           <div className={styles.separator} />
           <button
+            type="button"
             name="editor-action"
             className="icon link"
             onClick={apply(['\n- '])}
@@ -98,6 +106,7 @@ const MarkdownEditor = ({ note, onChange, onBlur, toolbar, spellCheck }) => {
             <Listcon size={16} />
           </button>
           <button
+            type="button"
             name="editor-action"
             className="icon link"
             onClick={apply(['\n1. '])}

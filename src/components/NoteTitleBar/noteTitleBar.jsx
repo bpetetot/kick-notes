@@ -34,7 +34,7 @@ const NoteTitleBar = ({ note }) => {
       </div>
       <div className={styles.actions}>
         {note.isNote && (
-          <button onClick={toggleEditor} className="icon link">
+          <button type="button" onClick={toggleEditor} className="icon link">
             {settings.editorMode ? (
               <PreviewIcon size={20} />
             ) : (
@@ -43,7 +43,11 @@ const NoteTitleBar = ({ note }) => {
           </button>
         )}
         {!isMobile && (
-          <button onClick={toggleFullscreen} className="icon link">
+          <button
+            type="button"
+            onClick={toggleFullscreen}
+            className="icon link"
+          >
             {fullscreen ? (
               <MinimizeIcon size={20} />
             ) : (

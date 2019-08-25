@@ -65,12 +65,20 @@ const Header = ({ className }) => {
         {isAuthenticated && (
           <>
             {currentNote && (
-              <button onClick={onClickDeleteNote} className="icon link">
+              <button
+                type="button"
+                onClick={onClickDeleteNote}
+                className="icon link"
+              >
                 <DeleteIcon size={20} />
               </button>
             )}
             {!currentNote && currentNotebook && currentNotebook.level > 0 && (
-              <button onClick={onClickDeleteNotebook} className="icon link">
+              <button
+                type="button"
+                onClick={onClickDeleteNotebook}
+                className="icon link"
+              >
                 <DeleteIcon size={20} />
               </button>
             )}
