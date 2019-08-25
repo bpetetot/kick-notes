@@ -20,8 +20,8 @@ const MarkdownEditor = ({ note, onChange, onBlur, toolbar, spellCheck }) => {
     editor.current.value = note.content
   }, [note])
 
-  const apply = chars => e => {
-    applyAction(editor.current, ...chars)
+  const apply = (chars, charsBlock) => e => {
+    applyAction(editor.current, { chars, charsBlock })
   }
 
   const handleChange = e => {
@@ -76,15 +76,7 @@ const MarkdownEditor = ({ note, onChange, onBlur, toolbar, spellCheck }) => {
             type="button"
             name="editor-action"
             className="icon link"
-            onClick={apply(['`', '`'])}
-          >
-            <CodeIcon size={16} />
-          </button>
-          <button
-            type="button"
-            name="editor-action"
-            className="icon link"
-            onClick={apply(['\n```\n', '\n```\n'])}
+            onClick={apply(['`', '`'], ['\n```\n', '\n```\n'])}
           >
             <CodeIcon size={16} />
           </button>

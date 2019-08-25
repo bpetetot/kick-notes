@@ -56,10 +56,18 @@ const applyChange = (
   textarea.focus()
 }
 
-export const applyAction = (textarea, charStart = '', charEnd = '') => {
+export const applyAction = (textarea, { chars = [], charsBlock = [] } = {}) => {
   const { value, selectionStart, selectionEnd } = textarea
   const selection = window.getSelection()
   const lines = value.split('\n')
+
+  let [charStart, charEnd] = chars
+
+  const multiline = selection.toString().split('\n').length > 1
+  if (multiline && charsBlock) {
+    charStart = charsBlock[0]
+    charEnd = charsBlock[1]
+  }
 
   if (selection.type === 'Caret') {
     const word = getWordAtPos(selectionStart, lines)
