@@ -51,7 +51,13 @@ const Settings = () => {
       </section>
 
       <section>
-        <div className={styles.title}>Note editor</div>
+        <div className={styles.title}>Markdown editor</div>
+        <Switch
+          name="editorToolbar"
+          label="Display toolbar"
+          defaultChecked={settings.editorToolbar}
+          onChange={checked => setSetting('editorToolbar', checked)}
+        />
         <Switch
           name="editorSpellCheck"
           label="Enable spell check"

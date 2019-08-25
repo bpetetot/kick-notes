@@ -7,6 +7,10 @@
   margin-bottom: 4rem;
 }
 
+.settings section > * {
+  margin-bottom: 16px;
+}
+
 .settings input[type='text'] {
   width: 100%;
   margin-bottom: 0;
@@ -15,7 +19,12 @@
 .title {
   font-size: 2rem;
   margin-top: 1rem;
-  margin-bottom: 2rem;
+}
+
+.subtitle {
+  font-weight: var(--font-bold);
+  margin-top: 1rem;
+  margin-bottom: 16px;
 }
 
 .account {

@@ -14,7 +14,9 @@ import * as firebase from './services/firebase'
 import * as serviceWorker from './sw'
 import App from './app'
 import Layout from './styles/Layout'
+
 import './styles/base.css'
+import './styles/themes/code-highlight-light.css'
 
 import 'pwacompat'
 

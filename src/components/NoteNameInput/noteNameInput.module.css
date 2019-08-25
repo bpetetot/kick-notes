@@ -3,6 +3,7 @@ input[type='text'].input {
   font-weight: var(--font-regular);
   width: 100%;
   height: 39px;
+  line-height: 39px;
   background-color: transparent;
   border: 1px solid transparent;
   border-radius: 0;

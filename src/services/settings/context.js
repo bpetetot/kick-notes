@@ -6,6 +6,8 @@ export const SettingsContext = React.createContext()
 
 const DEFAULT_SETTINGS = {
   editorMode: true,
+  editorToolbar: true,
+  editorSpellCheck: false,
 }
 
 export const useSettings = () => useContext(SettingsContext)
@@ -14,7 +16,10 @@ export const SettingsProvider = ({ children }) => {
   const [storedSettings, saveSettings] = useStorage('settings')
 
   const defaultSettings = storedSettings
-    ? JSON.parse(storedSettings)
+    ? {
+        ...DEFAULT_SETTINGS,
+        ...JSON.parse(storedSettings),
+      }
     : DEFAULT_SETTINGS
 
   const [settings, setSettings] = useState(defaultSettings)

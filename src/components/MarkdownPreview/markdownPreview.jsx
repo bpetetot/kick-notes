@@ -1,22 +1,20 @@
-import React from 'react'
-import marked from 'marked'
-
-marked.setOptions({
-  renderer: new marked.Renderer(),
-  gfm: true,
-  breaks: true,
-  sanitize: true,
-  smartLists: true,
-  smartypants: true,
-})
+import React, { useState, useEffect } from 'react'
+import { toHtml } from 'services/markdown'
 
 const MarkdownPreview = ({ content, className }) => {
-  if (!content) return null
+  const [html, setHtml] = useState()
 
-  const html = marked(content)
+  useEffect(() => {
+    setHtml(toHtml(content))
+  }, [content])
+
   return (
     <div className={className} dangerouslySetInnerHTML={{ __html: html }} />
   )
+}
+
+MarkdownPreview.defaultProps = {
+  content: '',
 }
 
 export default MarkdownPreview

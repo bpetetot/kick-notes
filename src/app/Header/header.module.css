@@ -7,15 +7,15 @@
   height: var(--header-bar-height);
 }
 
+.header a {
+  text-decoration: none;
+  color: var(--color-text);
+}
+
 .brand {
   display: flex;
   align-items: center;
   text-transform: uppercase;
-}
-
-.brand a {
-  text-decoration: none;
-  color: var(--color-text);
 }
 
 .backButton {

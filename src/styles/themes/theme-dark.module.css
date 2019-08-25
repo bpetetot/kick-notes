@@ -28,6 +28,11 @@
   --color-button-primary-background-hover: #0fa0ce;
   --color-button-primary-border-hover: #0fa0ce;
 
+  /* colors code */
+  --color-code: #cedae0;
+  --color-code-background: #474d57;
+  --color-code-border: #474d57;
+
   color: var(--color-text);
   background-color: var(--color-background);
 }

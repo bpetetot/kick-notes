@@ -28,13 +28,14 @@ const NotebookProvider = ({ children }) => {
 
     // load the current note
     getNote(path).then(setCurrentNote)
-  }, [isRepoLoaded, path]) // eslint-disable-line
+  }, [isRepoLoaded, path])
 
   return (
     <NotebookContext.Provider
       value={{
         currentNotebook,
         currentNote,
+        setCurrentNote,
         notes,
       }}
     >

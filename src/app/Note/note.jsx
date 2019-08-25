@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import cn from 'classnames'
 import debounce from 'lodash/debounce'
 
@@ -6,6 +6,7 @@ import { useNotebook } from 'services/notebook'
 import { useGit } from 'services/git'
 import { useSettings } from 'services/settings'
 import { updateNote } from 'services/notebook'
+import { MarkdownEditor } from 'components/Editors'
 import NoteTitleBar from 'components/NoteTitleBar'
 import MarkdownPreview from 'components/MarkdownPreview'
 
@@ -14,40 +15,26 @@ import styles from './note.module.css'
 const updateNoteDebounced = debounce(updateNote, 5000)
 
 const Note = ({ className }) => {
-  const { currentNote } = useNotebook()
+  const { currentNote, setCurrentNote } = useNotebook()
   const { settings } = useSettings()
   const { commitAndPush } = useGit()
 
-  const [content, setContent] = useState()
-  const [isSaved, setIsSaved] = useState(true)
-
   useEffect(() => {
-    if (currentNote) {
-      if (!isSaved) updateNoteDebounced.flush()
-      setContent(currentNote.content)
-    }
-
     return () => {
-      // save changes when component unmount
-      if (!isSaved) updateNoteDebounced.flush()
+      updateNoteDebounced.flush()
     }
-  }, [currentNote]) // eslint-disable-line
+  }, [])
 
-  const onEditNote = event => {
-    if (isSaved) setIsSaved(false)
-
-    const newContent = event.target.value
-    if (content === newContent) return
-
-    setContent(newContent)
+  const onEditNote = newContent => {
+    if (currentNote.content === newContent) return
     updateNoteDebounced(currentNote, newContent, () => {
-      setIsSaved(true)
+      setCurrentNote({ ...currentNote, content: newContent })
       commitAndPush(`Save note "${currentNote.name}"`)
     })
   }
 
   const onBlurEdit = () => {
-    if (!isSaved) updateNoteDebounced.flush()
+    updateNoteDebounced.flush()
   }
 
   if (!currentNote) return null
@@ -55,17 +42,20 @@ const Note = ({ className }) => {
   return (
     <div className={cn(styles.note, className)}>
       <NoteTitleBar note={currentNote} />
-      {settings.editorMode ? (
-        <textarea
-          value={content}
+      {settings.editorMode && (
+        <MarkdownEditor
+          note={currentNote}
           onChange={onEditNote}
           onBlur={onBlurEdit}
-          className={styles.editor}
-          placeholder="Start to write here."
-          spellCheck={settings.editorSpellCheck === true}
+          toolbar={settings.editorToolbar}
+          spellCheck={settings.editorSpellCheck}
         />
-      ) : (
-        <MarkdownPreview className={styles.preview} content={content} />
+      )}
+      {!settings.editorMode && (
+        <MarkdownPreview
+          className={styles.preview}
+          content={currentNote.content}
+        />
       )}
     </div>
   )

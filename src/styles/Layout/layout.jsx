@@ -3,9 +3,9 @@ import cn from 'classnames'
 
 import { useSettings } from 'services/settings'
 
+import light from '../themes/theme-light.module.css'
+import dark from '../themes/theme-dark.module.css'
 import styles from './layout.module.css'
-import light from './theme-light.module.css'
-import dark from './theme-dark.module.css'
 
 const Layout = ({ children }) => {
   const { settings } = useSettings()
