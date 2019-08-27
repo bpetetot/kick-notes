@@ -313,7 +313,6 @@ fieldset {
   margin-bottom: 1.5rem;
 }
 pre,
-blockquote,
 dl,
 figure,
 table,
@@ -330,7 +329,23 @@ hr {
   margin-top: 3rem;
   margin-bottom: 3.5rem;
   border-width: 0;
-  border-top: 1px solid #e1e1e1;
+  border-top: 1px solid var(--color-border);
+}
+
+blockquote {
+  border-left: 0.25em solid var(--color-border);
+  color: var(--color-text-light);
+  padding: 0 1em;
+  margin: 0;
+  margin-bottom: 2.5rem;
+}
+
+blockquote > :last-child {
+  margin-bottom: 0;
+}
+
+blockquote > :first-child {
+  margin-top: 0;
 }
 
 /* SVG
