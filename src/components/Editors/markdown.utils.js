@@ -1,4 +1,5 @@
-const getLineAtPos = (pos, lines) => {
+// get the line info at the given caret position
+const getLineAtPos = (pos, lines = []) => {
   let startLinePos = 0
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i]
@@ -17,7 +18,8 @@ const getLineAtPos = (pos, lines) => {
   return null
 }
 
-const getWordAtPos = (pos, lines) => {
+// get the word info at the given caret position
+const getWordAtPos = (pos, lines = []) => {
   const line = getLineAtPos(pos, lines)
   const caretPos = line.caret
   const words = line.content.split(' ')
@@ -37,56 +39,86 @@ const getWordAtPos = (pos, lines) => {
   return null
 }
 
-const applyChange = (
-  textarea,
-  posStart,
-  posEnd,
-  content,
-  charStart,
-  charEnd
-) => {
-  const newContent = charStart + content + charEnd
-  textarea.setSelectionRange(posStart, posEnd)
+// Apply changes
+const applyChanges = (textarea, { content, position, selection }) => {
+  textarea.setSelectionRange(position.start, position.end)
   textarea.focus()
-  document.execCommand('insertText', false, newContent)
-  textarea.setSelectionRange(
-    posStart + charStart.length,
-    posEnd + charStart.length
-  )
+  document.execCommand('insertText', false, content)
+  textarea.setSelectionRange(selection.start, selection.end)
   textarea.focus()
 }
 
-export const applyAction = (textarea, { chars = [], charsBlock = [] } = {}) => {
+export const applyAction = (textarea, { chars, charsBlock } = {}) => {
   const { value, selectionStart, selectionEnd } = textarea
   const selection = window.getSelection()
   const lines = value.split('\n')
 
+  // default charStart and charEnd
   let [charStart, charEnd] = chars
 
-  const multiline = selection.toString().split('\n').length > 1
-  if (multiline && charsBlock) {
+  // use charsBlock when severals lines are selected
+  const isBlock = selection.toString().split('\n').length > 1
+  if (isBlock && charsBlock) {
     charStart = charsBlock[0]
     charEnd = charsBlock[1]
   }
 
-  if (selection.type === 'Caret') {
+  let changes
+
+  if (charStart && !charEnd) {
+    // When only charStart, apply changes to the begining of the first line
+    const firstLine = getLineAtPos(selectionStart, lines)
+    changes = {
+      content: charStart,
+      position: {
+        start: firstLine.start,
+        end: firstLine.start,
+      },
+      selection: {
+        start: selectionStart + charStart.length,
+        end: selectionEnd + charStart.length,
+      },
+    }
+  } else if (selection.type === 'Range') {
+    // When there is a selection apply changes to the selection
+    changes = {
+      content: charStart + selection.toString() + charEnd,
+      position: {
+        start: selectionStart,
+        end: selectionEnd,
+      },
+      selection: {
+        start: selectionStart + charStart.length,
+        end: selectionEnd + charStart.length,
+      },
+    }
+  } else if (selection.type === 'Caret') {
+    // When nothing selected, apply changes to the word where the caret is positioned
     const word = getWordAtPos(selectionStart, lines)
-    applyChange(
-      textarea,
-      word.start,
-      word.end,
-      word.content,
-      charStart,
-      charEnd
-    )
-  } else {
-    applyChange(
-      textarea,
-      selectionStart,
-      selectionEnd,
-      selection.toString(),
-      charStart,
-      charEnd
-    )
+    changes = {
+      content: charStart + word.content + charEnd,
+      position: {
+        start: word.start,
+        end: word.end,
+      },
+      selection: {
+        start: selectionStart + charStart.length,
+        end: selectionEnd + charStart.length,
+      },
+    }
   }
+
+  applyChanges(textarea, changes)
+}
+
+const isMac = window.navigator.platform.match('Mac')
+
+export const listenActionsKey = (event, textarea, actions) => {
+  actions.forEach(({ key, ...action }) => {
+    const ctrlPressed = isMac ? !!event.metaKey : !!event.ctrlKey
+    const keyPressed = event.key === key
+    if (ctrlPressed && keyPressed) {
+      applyAction(textarea, action)
+    }
+  })
 }
