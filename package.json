@@ -11,10 +11,10 @@
     "deploy": "firebase deploy --only hosting"
   },
   "dependencies": {
-    "@isomorphic-git/lightning-fs": "^3.3.0",
+    "@isomorphic-git/lightning-fs": "^3.3.2",
     "classnames": "^2.2.6",
-    "firebase": "^6.3.5",
-    "isomorphic-git": "^0.60.1",
+    "firebase": "^6.6.2",
+    "isomorphic-git": "^0.67.2",
     "lodash": "^4.17.15",
     "marked": "^0.7.0",
     "prismjs": "^1.17.1",
@@ -23,10 +23,10 @@
     "react-dom": "^16.9.0",
     "react-feather": "^2.0.3",
     "react-router-dom": "^5.0.1",
-    "react-scripts": "^3.1.1"
+    "react-scripts": "^3.1.2"
   },
   "devDependencies": {
-    "firebase-tools": "^7.2.2",
+    "firebase-tools": "^7.3.2",
     "prettier": "^1.18.2"
   },
   "eslintConfig": {
